@@ -3,6 +3,7 @@ import { gsap } from 'gsap';
 import { useGSAP } from '@gsap/react';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Navbar from '../components/Navbar';
+import smartCityImg from '../assets/smartcity.png';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -80,7 +81,7 @@ const LandingPage = () => {
                 <div className="section-2-content max-w-[1300px] mx-auto grid lg:grid-cols-2 gap-12 items-center">
 
                     <div className="hidden lg:flex justify-center">
-                        <div className="w-64 h-64 bg-gray-200 rounded-full opacity-50 animate-pulse"></div>
+                        <img src={smartCityImg} alt="Smart City AI Analysis" className="w-full max-w-[800px] h-auto object-contain drop-shadow-xl" />
                     </div>
 
                     <div className="flex flex-col items-start text-left">
