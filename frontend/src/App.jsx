@@ -8,7 +8,7 @@ import LandingPage from "./pages/LandingPage";
 
 function App() {
   const { user } = useAuth();
-  // TEMPORARY: Rendering LandingPage for testing
+
   return (
     <div>
       <LandingPage />

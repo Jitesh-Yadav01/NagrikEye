@@ -44,10 +44,10 @@ const LandingPage = () => {
     }, { scope: container });
 
     return (
-        <div ref={container} className="w-full bg-[#8aba55] font-sans selection:bg-black selection:text-white relative">
+        <div ref={container} className="w-full font-sans selection:bg-black selection:text-white relative">
             <Navbar />
 
-            <section className="sticky top-0 w-full h-screen flex flex-col items-center justify-center pt-32 pb-20 px-4 text-center bg-[#8aba55] z-0">
+            <section className="sticky top-0 w-full h-screen flex flex-col items-center justify-center pt-32 pb-20 px-4 text-center z-0">
 
                 <h1 className="text-[#2c2e2a] font-medium leading-[0.9] tracking-[-0.04em] mb-6 text-[clamp(60px,10vw,150px)]">
                     <div className="overflow-hidden">

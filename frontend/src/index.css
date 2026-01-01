@@ -6,6 +6,7 @@
 
 html,
 body {
-    background-color: aliceblue;
+    background: radial-gradient(circle at 50% 40%, #a6e676 0%, #8ed462 100%);
+    background-color: #8ed462;
     font-family: var(--font-sans);
 }
