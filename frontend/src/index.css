@@ -1,5 +1,11 @@
 @import "tailwindcss";
 
-html, body{
+@theme {
+    --font-sans: "Inter", sans-serif;
+}
+
+html,
+body {
     background-color: aliceblue;
+    font-family: var(--font-sans);
 }
