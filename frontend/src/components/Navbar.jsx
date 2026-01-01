@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import logo from '../assets/logo.png';
 import userAvatar from '../assets/user_avatar.svg';
 
@@ -6,6 +6,7 @@ const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isQuoteOpen, setIsQuoteOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null);
   const [selectedCategory, setSelectedCategory] = useState('');
   const [selectedFile, setSelectedFile] = useState(null);
   const [location, setLocation] = useState('');
@@ -52,6 +53,18 @@ const Navbar = () => {
     }
     return () => { document.body.style.overflow = 'unset'; };
   }, [isQuoteOpen]);
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsDropdownOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   return (
     <>
@@ -193,7 +206,7 @@ const Navbar = () => {
                       </button>
                     </div>
                   </div>
-                  <div className="flex flex-col gap-2 relative">
+                  <div className="flex flex-col gap-2 relative" ref={dropdownRef}>
                     <label className="text-[15px] font-bold text-[#2c2e2a] uppercase tracking-wide">CATEGORY *</label>
                     <div
                       className="bg-transparent border-b border-black/20 pb-4 text-xl cursor-pointer flex items-center justify-between"
