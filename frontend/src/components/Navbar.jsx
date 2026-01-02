@@ -1,24 +1,20 @@
 import React, { useState } from "react";
 import logo from '../assets/logo.svg';
 import userAvatar from '../assets/user_avatar.svg';
-import ReportPopup from './ReportPopup';
 import { useAuth } from "../context/AuthContext";
 import { Link } from "react-router-dom";
 import { logout } from "../firebase/auth";
 
-const Navbar = () => {
+const Navbar = ({ onOpenReport }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isQuoteOpen, setIsQuoteOpen] = useState(false);
-
-  const {user} = useAuth()
+  const { user } = useAuth();
 
   return (
     <>
-
-      <nav className="hidden lg:block w-full top-6 left-0 z-50 px-6 font-sans relative mb-10">
+      <nav className="hidden lg:block w-full fixed top-6 left-0 z-50 px-6 font-sans">
         <div className="mx-auto flex items-stretch justify-between h-[68px] gap-[24px] max-w-[1306.5px]">
           <div className="flex items-center flex-grow shadow-sm bg-white rounded-[10px] pl-[17px] pr-[10.625px] h-full">
-            <Link to={"/"} className="flex items-center gap-2 group mr-auto">
+            <Link to="/" className="flex items-center gap-2 group mr-auto">
               <span className="flex items-center justify-center">
                 <img src={logo} alt="NagrikEye" className="h-[28px] w-auto" />
               </span>
@@ -29,15 +25,15 @@ const Navbar = () => {
 
             <div className="flex items-center gap-1 mr-6">
               {[
-                { label: 'Recent Reports', hasDropdown: false , path : "/reports"},
-                { label: 'Map', hasDropdown: false, path :  ""},
+                { label: 'Recent Reports', hasDropdown: false, path: "/reports" },
+                { label: 'Map', hasDropdown: false, path: "" },
                 { label: 'Insights', hasDropdown: true, path: "/reports" },
                 { label: 'About', hasDropdown: false, path: "/reports" }
               ].map((item) => (
                 <div key={item.label} className="relative group flex items-center justify-center px-[24px] h-[46.75px] cursor-pointer">
                   <span className="absolute inset-0 bg-[#F5F1E4] rounded-full opacity-0 scale-75 group-hover:opacity-100 group-hover:scale-100 transition-all duration-400 ease-[cubic-bezier(0.17,0.67,0.3,1.33)] z-0"></span>
                   <div className="relative z-10 flex items-center gap-1.5">
-                    <Link  to={item.path} className="text-[18px] font-medium text-[#2C2E2A]">{item.label}</Link>
+                    <Link to={item.path} className="text-[18px] font-medium text-[#2C2E2A]">{item.label}</Link>
                     {item.hasDropdown && (
                       <svg className="w-2.5 h-2.5 mt-0.5 text-[#1a1a1a]" viewBox="0 0 10 6" fill="none" aria-hidden="true">
                         <path fill="none" stroke="currentColor" strokeWidth="1.5" d="m1 1 4 4 4-4"></path>
@@ -47,18 +43,22 @@ const Navbar = () => {
                 </div>
               ))}
 
-              <a href="#" className="relative group flex items-center justify-center px-[20px] h-[40px] cursor-pointer ml-2">
+              <div className="relative group flex items-center justify-center px-[20px] h-[40px] cursor-pointer ml-2">
                 <span className="absolute inset-0 bg-[#1a1a1a] rounded-full transition-all duration-300 ease-in-out group-hover:scale-105 group-hover:bg-black"></span>
-                <span className="relative z-10 text-[16px] font-medium text-white">{
-                  user ? (<button onClick={logout}>Logout</button>) : (<Link>Login</Link>)}
-                  </span>
-              </a>
+                <span className="relative z-10 text-[16px] font-medium text-white">
+                  {user ? (
+                    <button onClick={logout}>Logout</button>
+                  ) : (
+                    <Link to="/login">Login</Link>
+                  )}
+                </span>
+              </div>
             </div>
           </div>
 
           <div
             className="flex items-center justify-between shadow-sm flex-shrink-0 relative overflow-hidden group cursor-pointer bg-white rounded-[10px] h-full min-w-[192px]"
-            onClick={() => setIsQuoteOpen(true)}
+            onClick={onOpenReport}
           >
             <div className="absolute right-[10px] top-1/2 -translate-y-1/2 bg-black rounded-full transition-all duration-[250ms] ease-[cubic-bezier(0.5,0,0,1)] w-[40px] h-[40px] group-hover:right-0 group-hover:w-full group-hover:h-full group-hover:rounded-[10px] z-0"></div>
 
@@ -67,7 +67,7 @@ const Navbar = () => {
                 Report Issue
               </span>
               <div className="w-10 h-10 flex items-center justify-center rounded-full overflow-hidden relative z-10 pointer-events-none">
-                <img src={user.photoURL ? user.photoURL : userAvatar} alt="User" />
+                <img src={user?.photoURL ? user.photoURL : userAvatar} alt="User" className="w-full h-full object-cover" />
               </div>
             </a>
           </div>
@@ -82,14 +82,14 @@ const Navbar = () => {
         <div className="flex flex-col p-4 pointer-events-auto">
 
           <div className="bg-white rounded-[10px] shadow-sm px-[12px] py-[8px] flex items-center justify-between min-h-[61px]">
-            <a href="#" className="flex items-center gap-2 pl-1">
+            <Link to="/" className="flex items-center gap-2 pl-1">
               <img src={logo} alt="NagrikEye" className="h-[24px] w-auto" />
               <span className="text-[18px] font-medium text-[#1a1a1a]">NagrikEye</span>
-            </a>
+            </Link>
 
             <div className="flex items-center gap-2">
               <button
-                onClick={() => setIsQuoteOpen(true)}
+                onClick={onOpenReport}
                 className="bg-[#F5F1E4] hover:bg-[#ebe5d5] text-[#1a1a1a] px-4 py-2 rounded-[8px] text-[15px] font-medium transition-colors"
                 style={{ borderRadius: '8px' }}
               >
@@ -122,7 +122,7 @@ const Navbar = () => {
               }`}
           >
             <div className="bg-white rounded-[10px] shadow-sm flex flex-col py-2">
-              <Link to={"/reports"} className="px-5 py-3 text-[18px] font-medium text-[#1a1a1a] border-b border-gray-100 hover:bg-gray-50 flex items-center justify-between">
+              <Link to="/reports" className="px-5 py-3 text-[18px] font-medium text-[#1a1a1a] border-b border-gray-100 hover:bg-gray-50 flex items-center justify-between">
                 Recent Reports
               </Link>
               <a href="#" className="px-5 py-3 text-[18px] font-medium text-[#1a1a1a] border-b border-gray-100 hover:bg-gray-50 flex items-center justify-between">
@@ -145,9 +145,15 @@ const Navbar = () => {
               }`}
           >
             <div className="bg-[#1a1a1a] rounded-[10px] shadow-sm px-5 py-3 flex items-center justify-between group cursor-pointer">
-              <span className="text-[18px] font-medium text-white group-hover:scale-105 transition-transform duration-300">Login</span>
+              <span className="text-[18px] font-medium text-white group-hover:scale-105 transition-transform duration-300">
+                {user ? (
+                  <button onClick={logout}>Logout</button>
+                ) : (
+                  <Link to="/login">Login</Link>
+                )}
+              </span>
               <div className="w-9 h-9 bg-white/10 rounded-full flex items-center justify-center overflow-hidden group-hover:bg-white/20 transition-colors">
-                <img src={user.photoURL} alt="Login" className="w-full h-full object-cover" />
+                <img src={user?.photoURL ? user.photoURL : userAvatar} alt="Login" className="w-full h-full object-cover" />
               </div>
             </div>
           </div>
@@ -158,8 +164,6 @@ const Navbar = () => {
           <div className="absolute inset-0 z-[-1]" onClick={() => setIsMobileMenuOpen(false)}></div>
         )}
       </div>
-
-      <ReportPopup isOpen={isQuoteOpen} onClose={() => setIsQuoteOpen(false)} />
     </>
   );
 };

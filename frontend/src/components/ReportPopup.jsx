@@ -3,16 +3,23 @@ import { uploadSingleImage } from "../utils/uploadSingleImage";
 import { useAuth } from "../context/AuthContext";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { db } from "../firebase/firebase";
+import { Link } from "react-router-dom";
 
 const ReportPopup = ({ isOpen, onClose }) => {
   const { user } = useAuth();
-  console.log(user.uid);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
   const [location, setLocation] = useState("");
   const [isLocating, setIsLocating] = useState(false);
+
+  // Safe logging
+  useEffect(() => {
+    if (user) {
+      console.log("Reporting as:", user.uid);
+    }
+  }, [user]);
 
   const handleDetectLocation = () => {
     if (!navigator.geolocation) {
@@ -77,24 +84,35 @@ const ReportPopup = ({ isOpen, onClose }) => {
   }, []);
 
   if (!isOpen) return null;
-  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const imageUrl = await uploadSingleImage(selectedFile, user.uid);
+    // Allow anonymous submission if user is null
+    const uid = user ? user.uid : "anonymous";
+    const email = user ? user.email : "anonymous@nagrikeye.com";
+
+    // Default to empty string if no file
+    let imageUrl = "";
+    if (selectedFile) {
+      imageUrl = await uploadSingleImage(selectedFile, uid);
+    }
+
     try {
-      const docRef = await addDoc(collection(db, "reports"), {
+      await addDoc(collection(db, "reports"), {
         location,
         selectedCategory,
         upvotes: 0,
-        parentId: user.uid,
-        parentEmail: user.email,
+        parentId: uid,
+        parentEmail: email,
         imageFile: imageUrl,
         createdAt: serverTimestamp(),
       });
       alert("Submission Successful")
       setSelectedFile(null)
+      onClose();
     } catch (err) {
       console.log(err);
+      alert("Failed to submit report. Please try again.");
     }
   };
 
@@ -107,7 +125,7 @@ const ReportPopup = ({ isOpen, onClose }) => {
       <div className="relative w-full h-auto max-h-[90vh] bg-[#F5F1E4] rounded-t-[50px] shadow-2xl overflow-y-auto animate-slide-up flex flex-col">
         <button
           onClick={onClose}
-          className="absolute w-12 h-12 bg-[#F5E84E] rounded-full flex items-center justify-center hover:bg-[#ebd040] transition-colors z-50 shadow-sm top-[21.25px] right-[21.25px]"
+          className="absolute w-12 h-12 bg-[#F5E84E] rounded-full flex items-center justify-center hover:bg-[#ebd040] transition-colors z-50 shadow-sm top-[21.25px] right-[21.25px] cursor-pointer"
         >
           <svg
             width="24"
@@ -142,7 +160,7 @@ const ReportPopup = ({ isOpen, onClose }) => {
             </svg>
           </h2>
 
-          <form className="space-y-8 max-w-4xl">
+          <form className="space-y-8 max-w-4xl" onSubmit={handleSubmit}>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-8">
               <div className="flex flex-col gap-2 relative">
                 <label className="text-[15px] font-bold text-[#2c2e2a] uppercase tracking-wide">
@@ -155,11 +173,12 @@ const ReportPopup = ({ isOpen, onClose }) => {
                     onChange={(e) => setLocation(e.target.value)}
                     placeholder="e.g. Main Street, Pimpri"
                     className="w-full bg-transparent border-b border-black/20 pb-4 text-xl focus:border-black outline-none transition-colors placeholder:text-black/30 pr-10"
+                    required
                   />
                   <button
                     type="button"
                     onClick={handleDetectLocation}
-                    className="absolute right-0 top-0 text-black/50 hover:text-[#8ED462] transition-colors p-1"
+                    className="absolute right-0 top-0 text-black/50 hover:text-[#8ED462] transition-colors p-1 cursor-pointer"
                     title="Auto-detect Location"
                   >
                     <svg
@@ -199,9 +218,8 @@ const ReportPopup = ({ isOpen, onClose }) => {
                     {selectedCategory || "Select Category"}
                   </span>
                   <svg
-                    className={`w-5 h-5 transition-transform duration-300 ${
-                      isDropdownOpen ? "rotate-180" : ""
-                    }`}
+                    className={`w-5 h-5 transition-transform duration-300 ${isDropdownOpen ? "rotate-180" : ""
+                      }`}
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -295,8 +313,8 @@ const ReportPopup = ({ isOpen, onClose }) => {
 
             <div className="pt-4">
               <button
-                className="bg-black text-white px-8 py-3 rounded-full text-lg font-medium hover:bg-gray-800 transition-colors"
-                onClick={(e) => handleSubmit(e)}
+                type="submit"
+                className="bg-black text-white px-8 py-3 rounded-full text-lg font-medium hover:bg-gray-800 transition-colors cursor-pointer"
               >
                 Submit Report Anonymously
               </button>

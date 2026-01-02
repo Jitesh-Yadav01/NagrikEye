@@ -1,14 +1,16 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { useGSAP } from '@gsap/react';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Navbar from '../components/Navbar';
 import smartCityImg from '../assets/smartcity.png';
+import ReportPopup from '../components/ReportPopup';
 
 gsap.registerPlugin(ScrollTrigger);
 
 const LandingPage = () => {
     const container = useRef();
+    const [isReportOpen, setIsReportOpen] = useState(false);
 
     useGSAP(() => {
         const tl = gsap.timeline();
@@ -45,6 +47,7 @@ const LandingPage = () => {
 
     return (
         <div ref={container} className="w-full font-sans selection:bg-black selection:text-white relative">
+            <Navbar onOpenReport={() => setIsReportOpen(true)} />
 
             <section className="sticky top-0 w-full h-screen flex flex-col items-center justify-center pt-32 pb-20 px-4 text-center z-0">
 
@@ -92,10 +95,13 @@ const LandingPage = () => {
                         </p>
 
                         <div className="flex flex-wrap gap-4">
-                            <button className="px-8 py-3 bg-[#f27c5e] text-black font-medium text-[16px] rounded-[12px] hover:bg-[#e06b4d] transition-colors">
+                            <button className="px-8 py-3 bg-[#f27c5e] text-black font-medium text-[16px] rounded-[12px] hover:bg-[#e06b4d] transition-colors cursor-pointer">
                                 Our Mission
                             </button>
-                            <button className="px-8 py-3 bg-black text-white font-medium text-[16px] rounded-[12px] hover:bg-gray-800 transition-colors">
+                            <button
+                                onClick={() => setIsReportOpen(true)}
+                                className="px-8 py-3 bg-black text-white font-medium text-[16px] rounded-[12px] hover:bg-gray-800 transition-colors cursor-pointer"
+                            >
                                 Report Issue
                             </button>
                         </div>
@@ -103,6 +109,8 @@ const LandingPage = () => {
 
                 </div>
             </section>
+
+            <ReportPopup isOpen={isReportOpen} onClose={() => setIsReportOpen(false)} />
         </div>
     );
 };
