@@ -91,6 +91,7 @@ export default function Auth() {
           )}
 
           <button
+            type="submit"
             disabled={loading}
             className="w-full rounded-lg bg-[#339966] py-3 font-semibold text-white transition-colors duration-200 hover:bg-[#2b8056] disabled:opacity-60 cursor-pointer"
           >
