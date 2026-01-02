@@ -4,24 +4,14 @@ import Dashboard from "./components/Dashboard";
 import { Routes, Route } from "react-router-dom";
 import Profile from "./components/Profile";
 import Navbar from "./components/Navbar";
+import LandingPage from "./pages/LandingPage";
 
 function App() {
-  const { user } = useAuth();  
+  const { user } = useAuth();
+
   return (
     <div>
-      {user ? (
-        <>
-          <Navbar/>
-          <Routes>
-           <Route path="/" element={<Dashboard/>}/>
-           <Route path="/profile" element={<Profile/>}/>
-          </Routes>
-        </>
-      ) : (
-        <>
-          <Auth/>
-        </>
-      )}
+      <LandingPage />
     </div>
   );
 }

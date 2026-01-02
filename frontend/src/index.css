@@ -1,5 +1,12 @@
 @import "tailwindcss";
 
-html, body{
-    background-color: aliceblue;
+@theme {
+    --font-sans: "Inter", sans-serif;
+}
+
+html,
+body {
+    background: radial-gradient(circle at 50% 40%, #a6e676 0%, #8ed462 100%);
+    background-color: #8ed462;
+    font-family: var(--font-sans);
 }
