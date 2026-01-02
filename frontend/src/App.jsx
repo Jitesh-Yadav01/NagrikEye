@@ -1,17 +1,28 @@
 import { useAuth } from "./context/AuthContext";
 import Auth from "./components/Auth";
-import Dashboard from "./components/Dashboard";
-import { Routes, Route } from "react-router-dom";
-import Profile from "./components/Profile";
 import Navbar from "./components/Navbar";
+import { Routes, Route } from "react-router-dom";
 import LandingPage from "./pages/LandingPage";
+import Posts from "./pages/Posts";
 
 function App() {
   const { user } = useAuth();
 
   return (
     <div>
-      <LandingPage />
+       {user ? (
+        <>
+        <Navbar/>
+          <Routes>
+           <Route path="/" element={<LandingPage/>}/>
+           <Route path="/reports" element={<Posts/>}/>
+          </Routes>
+        </>
+      ) : (
+        <>
+          <Auth/>
+        </>
+      )}
     </div>
   );
 }
