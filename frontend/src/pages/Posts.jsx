@@ -9,7 +9,7 @@ import { useGSAP } from '@gsap/react';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
-// Navbar and Popup handled by parent LandingPage
+
 
 const Posts = () => {
   const container = useRef();

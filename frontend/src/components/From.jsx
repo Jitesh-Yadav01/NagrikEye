@@ -28,13 +28,13 @@ const Form = () => {
   const handleMouseEnter = () => {
     if (hasPlayed.current) return;
     hasPlayed.current = true;
-    t1.current.play(); // ✅ correct ref
+    t1.current.play();
   };
 
   return (
     <div
       ref={containerWrap}
-      onMouseEnter={handleMouseEnter} // ✅ correct
+      onMouseEnter={handleMouseEnter}
       className="bg-white/70 backdrop-blur-xl rounded-2xl shadow-[0_10px_30px_rgba(0,0,0,0.06)] border border-white/40 p-6 relative"
     >
       <div className="flex items-center justify-center gap-4 my-4">
@@ -83,12 +83,12 @@ const Form = () => {
         </div>
       </form>
 
-      {/* COVER */}
+
       <div
-  className="form-cover absolute inset-0 rounded-2xl z-10
+        className="form-cover absolute inset-0 rounded-2xl z-10
              bg-center bg-no-repeat bg-cover"
-  style={{ backgroundImage: "url(/eyesBg.gif)" }}
-/>
+        style={{ backgroundImage: "url(/eyesBg.gif)" }}
+      />
 
     </div>
   );
