@@ -20,7 +20,8 @@ function App() {
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<Auth />} />
-        <Route path="/reports" element={<Posts />} />
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/login" element={<Auth />} />
       </Routes>
     </div>
   );

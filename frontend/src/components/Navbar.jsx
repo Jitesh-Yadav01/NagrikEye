@@ -25,7 +25,7 @@ const Navbar = ({ onOpenReport }) => {
 
             <div className="flex items-center gap-1 mr-6">
               {[
-                { label: 'Recent Reports', hasDropdown: false, path: "/reports" },
+                { label: 'Recent Reports', hasDropdown: false, path: "#reports" },
                 { label: 'Map', hasDropdown: false, path: "" },
                 { label: 'Insights', hasDropdown: true, path: "/reports" },
                 { label: 'About', hasDropdown: false, path: "/reports" }
@@ -33,7 +33,7 @@ const Navbar = ({ onOpenReport }) => {
                 <div key={item.label} className="relative group flex items-center justify-center px-[24px] h-[46.75px] cursor-pointer">
                   <span className="absolute inset-0 bg-[#F5F1E4] rounded-full opacity-0 scale-75 group-hover:opacity-100 group-hover:scale-100 transition-all duration-400 ease-[cubic-bezier(0.17,0.67,0.3,1.33)] z-0"></span>
                   <div className="relative z-10 flex items-center gap-1.5">
-                    <Link to={item.path} className="text-[18px] font-medium text-[#2C2E2A]">{item.label}</Link>
+                    <a href={item.path} className="text-[18px] font-medium text-[#2C2E2A]">{item.label}</a>
                     {item.hasDropdown && (
                       <svg className="w-2.5 h-2.5 mt-0.5 text-[#1a1a1a]" viewBox="0 0 10 6" fill="none" aria-hidden="true">
                         <path fill="none" stroke="currentColor" strokeWidth="1.5" d="m1 1 4 4 4-4"></path>
@@ -122,9 +122,9 @@ const Navbar = ({ onOpenReport }) => {
               }`}
           >
             <div className="bg-white rounded-[10px] shadow-sm flex flex-col py-2">
-              <Link to="/reports" className="px-5 py-3 text-[18px] font-medium text-[#1a1a1a] border-b border-gray-100 hover:bg-gray-50 flex items-center justify-between">
+              <a href="#reports" className="px-5 py-3 text-[18px] font-medium text-[#1a1a1a] border-b border-gray-100 hover:bg-gray-50 flex items-center justify-between">
                 Recent Reports
-              </Link>
+              </a>
               <a href="#" className="px-5 py-3 text-[18px] font-medium text-[#1a1a1a] border-b border-gray-100 hover:bg-gray-50 flex items-center justify-between">
                 Map
                 <svg className="w-4 h-4 text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M6 9l6 6 6-6" /></svg>
