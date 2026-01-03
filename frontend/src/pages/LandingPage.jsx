@@ -4,6 +4,7 @@ import { useGSAP } from '@gsap/react';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Navbar from '../components/Navbar';
 import smartCityImg from '../assets/smartcity.png';
+import civicImg from '../assets/civic.png';
 import ReportPopup from '../components/ReportPopup';
 import Posts from './Posts';
 import MapSection from '../components/MapSection';
@@ -33,6 +34,13 @@ const LandingPage = () => {
             duration: 1,
             ease: 'power4.out'
         }, '-=0.5');
+
+        tl.from('.hero-image', {
+            y: 30,
+            opacity: 0,
+            duration: 1.2,
+            ease: 'power3.out'
+        }, '-=0.8');
 
         const section2Tl = gsap.timeline({
             scrollTrigger: {
@@ -99,6 +107,11 @@ const LandingPage = () => {
 
                 <div className="w-full max-w-4xl h-[300px] flex items-end justify-center">
                     <div className="relative w-full h-full">
+                        <img
+                            src={civicImg}
+                            alt="Civic Action Overview"
+                            className="hero-image w-full h-full object-contain object-bottom"
+                        />
                     </div>
                 </div>
             </section>
