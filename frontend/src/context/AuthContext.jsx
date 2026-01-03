@@ -17,7 +17,7 @@ export function AuthProvider({ children }) {
     return () => unsubscribe();
   }, []);
 
-  if (loading) return null; // or loader
+  if (loading) return null;
 
   return (
     <AuthContext.Provider value={{ user }}>

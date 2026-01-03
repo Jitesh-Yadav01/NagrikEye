@@ -4,7 +4,11 @@ import { useGSAP } from '@gsap/react';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Navbar from '../components/Navbar';
 import smartCityImg from '../assets/smartcity.png';
+import civicImg from '../assets/civic.png';
 import ReportPopup from '../components/ReportPopup';
+import Posts from './Posts';
+import MapSection from '../components/MapSection';
+import Footer from '../components/Footer';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -31,17 +35,52 @@ const LandingPage = () => {
             ease: 'power4.out'
         }, '-=0.5');
 
-        gsap.from('.section-2-content', {
-            y: 100,
+        tl.from('.hero-image', {
+            y: 30,
             opacity: 0,
-            duration: 1,
-            ease: 'power4.out',
+            duration: 1.2,
+            ease: 'power3.out'
+        }, '-=0.8');
+
+        const section2Tl = gsap.timeline({
             scrollTrigger: {
                 trigger: '.section-2-trigger',
                 start: 'top 60%',
                 toggleActions: 'play none none reverse'
             }
         });
+
+        section2Tl.from('.section-2-content', {
+            y: 50,
+            autoAlpha: 0,
+            duration: 0.8,
+            ease: 'power3.out'
+        })
+            .from('.sc-image', {
+                x: -50,
+                autoAlpha: 0,
+                duration: 1,
+                ease: 'power3.out'
+            }, '-=0.4')
+            .from('.sc-title', {
+                y: 30,
+                autoAlpha: 0,
+                duration: 0.8,
+                ease: 'power3.out'
+            }, '-=0.6')
+            .from('.sc-desc', {
+                y: 20,
+                autoAlpha: 0,
+                duration: 0.8,
+                ease: 'power3.out'
+            }, '-=0.6')
+            .from('.sc-btn', {
+                y: 20,
+                autoAlpha: 0,
+                duration: 0.6,
+                stagger: 0.1,
+                ease: 'power3.out'
+            }, '-=0.6');
 
     }, { scope: container });
 
@@ -68,11 +107,16 @@ const LandingPage = () => {
 
                 <div className="w-full max-w-4xl h-[300px] flex items-end justify-center">
                     <div className="relative w-full h-full">
+                        <img
+                            src={civicImg}
+                            alt="Civic Action Overview"
+                            className="hero-image w-full h-full object-contain object-bottom"
+                        />
                     </div>
                 </div>
             </section>
 
-            <section className="section-2-trigger relative w-full bg-[#F5F5F2] rounded-t-[50px] pt-32 pb-40 px-4 lg:px-12 z-10 shadow-[-10px_-10px_30px_rgba(0,0,0,0.05)] min-h-screen">
+            <section id="mission" className="section-2-trigger relative w-full bg-[#F5F5F2] rounded-t-[50px] pt-32 pb-24 px-4 lg:px-12 z-10 shadow-[-10px_-10px_30px_rgba(0,0,0,0.05)] min-h-screen">
 
                 <div className="section-2-content max-w-[1300px] mx-auto mb-32">
                     <h2 className="text-[#2c2e2a] text-[28px] lg:text-[40px] leading-[1.2] font-medium max-w-3xl">
@@ -80,27 +124,27 @@ const LandingPage = () => {
                     </h2>
                 </div>
 
-                <div className="section-2-content max-w-[1300px] mx-auto grid lg:grid-cols-2 gap-12 items-center">
+                <div className="max-w-[1300px] mx-auto grid lg:grid-cols-2 gap-12 items-center">
 
                     <div className="hidden lg:flex justify-center">
-                        <img src={smartCityImg} alt="Smart City AI Analysis" className="w-full max-w-[800px] h-auto object-contain drop-shadow-xl" />
+                        <img src={smartCityImg} alt="Smart City AI Analysis" className="sc-image w-full max-w-[800px] h-auto object-contain drop-shadow-xl" />
                     </div>
 
                     <div className="flex flex-col items-start text-left">
-                        <h3 className="text-[50px] lg:text-[80px] leading-[0.95] font-medium text-[#2c2e2a] mb-6 tracking-tight">
+                        <h3 className="sc-title text-[50px] lg:text-[80px] leading-[0.95] font-medium text-[#2c2e2a] mb-6 tracking-tight">
                             Smart City. <br /> Smarter Action.
                         </h3>
-                        <p className="text-[18px] lg:text-[20px] text-[#2c2e2a] leading-relaxed mb-8 max-w-lg opacity-80">
+                        <p className="sc-desc text-[18px] lg:text-[20px] text-[#2c2e2a] leading-relaxed mb-8 max-w-lg opacity-80">
                             Report unsafe construction, potholes, and traffic risks anonymously. Our AI analyzes and prioritizes issues so authorities can act where it matters most.
                         </p>
 
                         <div className="flex flex-wrap gap-4">
-                            <button className="px-8 py-3 bg-[#f27c5e] text-black font-medium text-[16px] rounded-[12px] hover:bg-[#e06b4d] transition-colors cursor-pointer">
+                            <button className="sc-btn px-8 py-3 bg-[#f27c5e] text-black font-medium text-[16px] rounded-[12px] hover:bg-[#e06b4d] transition-colors cursor-pointer">
                                 Our Mission
                             </button>
                             <button
                                 onClick={() => setIsReportOpen(true)}
-                                className="px-8 py-3 bg-black text-white font-medium text-[16px] rounded-[12px] hover:bg-gray-800 transition-colors cursor-pointer"
+                                className="sc-btn px-8 py-3 bg-black text-white font-medium text-[16px] rounded-[12px] hover:bg-gray-800 transition-colors cursor-pointer"
                             >
                                 Report Issue
                             </button>
@@ -108,7 +152,12 @@ const LandingPage = () => {
                     </div>
 
                 </div>
+
             </section>
+
+            <Posts />
+            <MapSection />
+            <Footer />
 
             <ReportPopup isOpen={isReportOpen} onClose={() => setIsReportOpen(false)} />
         </div>

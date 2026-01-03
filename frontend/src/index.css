@@ -4,6 +4,11 @@
     --font-sans: "Inter", sans-serif;
 }
 
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 100px;
+}
+
 html,
 body {
     background: radial-gradient(circle at 50% 40%, #a6e676 0%, #8ed462 100%);
