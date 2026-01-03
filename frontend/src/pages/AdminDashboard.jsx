@@ -76,12 +76,13 @@ const AdminDashboard = () => {
 
     const stats = {
         total: reports.length,
-        pending: reports.filter(r => r.status === 'pending').length,
+        pending: reports.filter(r => !r.status || r.status === 'pending').length,
         resolved: reports.filter(r => r.status === 'resolved').length
     };
 
     const filteredReports = reports.filter(r => {
         if (filter === 'all') return true;
+        if (filter === 'pending') return !r.status || r.status === 'pending';
         return r.status === filter;
     });
 
@@ -118,8 +119,8 @@ const AdminDashboard = () => {
                             key={f}
                             onClick={() => setFilter(f)}
                             className={`px-4 py-2 rounded-lg text-sm font-medium capitalize transition-colors ${filter === f
-                                    ? 'bg-[#1a1a1a] text-white'
-                                    : 'text-stone-500 hover:bg-stone-50'
+                                ? 'bg-[#1a1a1a] text-white'
+                                : 'text-stone-500 hover:bg-stone-50'
                                 }`}
                         >
                             {f}
@@ -167,8 +168,8 @@ const AdminDashboard = () => {
                                         </td>
                                         <td className="p-4">
                                             <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium capitalize ${report.status === 'resolved'
-                                                    ? 'bg-green-100 text-green-800'
-                                                    : 'bg-yellow-100 text-yellow-800'
+                                                ? 'bg-green-100 text-green-800'
+                                                : 'bg-yellow-100 text-yellow-800'
                                                 }`}>
                                                 {report.status || 'pending'}
                                             </span>
