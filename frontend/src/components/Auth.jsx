@@ -1,4 +1,5 @@
 import { useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
 import {
@@ -13,6 +14,7 @@ export default function Auth() {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   const containerRef = useRef(null);
 
@@ -48,6 +50,7 @@ export default function Auth() {
       } else {
         await loginWithEmail(email, password);
       }
+      navigate('/dashboard');
     } catch (err) {
       setError(err.message);
     } finally {
@@ -112,7 +115,10 @@ export default function Auth() {
         </div>
 
         <button
-          onClick={loginWithGoogle}
+          onClick={async () => {
+            const result = await loginWithGoogle();
+            if (result) navigate('/dashboard');
+          }}
           className="flex w-full items-center justify-center gap-3 rounded-lg border border-zinc-300 bg-white py-3 text-zinc-700 transition-colors duration-200 hover:bg-zinc-50 auth-item opacity-0 translate-y-5 cursor-pointer"
         >
           <img
