@@ -2,7 +2,7 @@ import React from 'react';
 
 const MapSection = () => {
     return (
-        <section className="w-full bg-[#F5F5F2] pb-32 px-4 lg:px-12 relative z-10 font-sans">
+        <section id="map" className="w-full bg-[#F5F5F2] pb-32 px-4 lg:px-12 relative z-10 font-sans">
             <div className="max-w-[1400px] mx-auto">
                 <div className="mb-12 text-center md:text-left">
                     <h2 className="text-[50px] lg:text-[80px] leading-[0.95] font-medium text-[#2c2e2a] mb-6 tracking-tight">
