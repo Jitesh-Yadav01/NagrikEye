@@ -378,7 +378,7 @@ const AdminAI = () => {
                                         <div className="w-16 h-16 bg-stone-50 rounded-2xl flex items-center justify-center">
                                             <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-stone-300"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2-2z"></path></svg>
                                         </div>
-                                        <p>Start a new conversation about city data</p>
+                                        <p>{!API_KEY ? "Select a conversation from AI History to view" : "Start a new conversation about city data"}</p>
                                     </div>
                                 )}
                                 {chatHistory.map((msg, i) => (
@@ -415,7 +415,7 @@ const AdminAI = () => {
                                         type="text"
                                         value={input}
                                         onChange={(e) => setInput(e.target.value)}
-                                        placeholder={!API_KEY ? "API Key required to chat..." : "Ask about reports..."}
+                                        placeholder={!API_KEY ? "Read-only mode (No API Key detected)" : "Ask about reports..."}
                                         disabled={!API_KEY}
                                         className="w-full bg-stone-50 border border-stone-200 rounded-xl px-5 py-4 pr-14 focus:outline-none focus:border-[#8ED462] focus:bg-white focus:ring-4 focus:ring-[#8ED462]/10 transition-all shadow-sm disabled:bg-stone-100 disabled:text-stone-400 disabled:cursor-not-allowed"
                                     />
@@ -427,7 +427,7 @@ const AdminAI = () => {
                                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
                                     </button>
                                 </div>
-                                {!API_KEY && <p className="text-xs text-red-500 mt-2 text-center">API Key missing. Chat disabled.</p>}
+                                {!API_KEY && <p className="text-xs text-stone-400 mt-2 text-center">Read-only mode enabled.</p>}
                             </form>
                         </div>
                     </div>
