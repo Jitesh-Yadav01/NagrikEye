@@ -139,9 +139,7 @@ const LandingPage = () => {
                         </p>
 
                         <div className="flex flex-wrap gap-4">
-                            <button className="sc-btn px-8 py-3 bg-[#f27c5e] text-black font-medium text-[16px] rounded-[12px] hover:bg-[#e06b4d] transition-colors cursor-pointer">
-                                Our Mission
-                            </button>
+
                             <button
                                 onClick={() => setIsReportOpen(true)}
                                 className="sc-btn px-8 py-3 bg-black text-white font-medium text-[16px] rounded-[12px] hover:bg-gray-800 transition-colors cursor-pointer"
