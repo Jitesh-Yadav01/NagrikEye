@@ -126,7 +126,7 @@ const Posts = () => {
           </p>
         </div>
 
-        <div className="posts-filter">
+        <div className="posts-filter relative z-50">
           <FilterBar
             filter={filter}
             setFilter={setFilter}

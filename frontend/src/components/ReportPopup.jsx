@@ -16,6 +16,8 @@ const ReportPopup = ({ isOpen, onClose }) => {
   const [isLocating, setIsLocating] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
+  const [coordinates, setCoordinates] = useState(null);
+
   useEffect(() => {
     if (user) {
       console.log("Reporting as:", user.uid);
@@ -32,6 +34,7 @@ const ReportPopup = ({ isOpen, onClose }) => {
     navigator.geolocation.getCurrentPosition(
       async (position) => {
         const { latitude, longitude } = position.coords;
+        setCoordinates({ lat: latitude, lng: longitude });
         try {
           const response = await fetch(
             `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`
@@ -78,6 +81,7 @@ const ReportPopup = ({ isOpen, onClose }) => {
 
   const resetForm = () => {
     setLocation("");
+    setCoordinates(null);
     setSelectedCategory("");
     setDescription("");
     setSelectedFile(null);
@@ -103,6 +107,24 @@ const ReportPopup = ({ isOpen, onClose }) => {
     const email = user ? user.email : "anonymous@nagrikeye.com";
 
     try {
+      let finalLat = coordinates?.lat;
+      let finalLng = coordinates?.lng;
+
+      if (!finalLat && !finalLng && location) {
+        try {
+          const response = await fetch(
+            `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(location)}`
+          );
+          const data = await response.json();
+          if (data && data.length > 0) {
+            finalLat = parseFloat(data[0].lat);
+            finalLng = parseFloat(data[0].lon);
+          }
+        } catch (geoError) {
+          console.error("Geocoding failed:", geoError);
+        }
+      }
+
       let imageUrl = "";
       if (selectedFile) {
         imageUrl = await uploadSingleImage(selectedFile, uid);
@@ -110,6 +132,8 @@ const ReportPopup = ({ isOpen, onClose }) => {
 
       await addDoc(collection(db, "reports"), {
         location,
+        latitude: finalLat || null,
+        longitude: finalLng || null,
         selectedCategory,
         description,
         upvotes: 0,
@@ -201,7 +225,10 @@ const ReportPopup = ({ isOpen, onClose }) => {
                     <input
                       type="text"
                       value={location}
-                      onChange={(e) => setLocation(e.target.value)}
+                      onChange={(e) => {
+                        setLocation(e.target.value);
+                        setCoordinates(null);
+                      }}
                       placeholder="e.g. Main Street, Pimpri"
                       className="w-full bg-transparent border-b border-black/20 pb-4 text-xl focus:border-black outline-none transition-colors placeholder:text-black/30 pr-10"
                       required

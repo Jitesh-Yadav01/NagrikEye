@@ -43,7 +43,7 @@ const Sidebar = ({ isCollapsed, toggleSidebar, onLogout, isMobile }) => {
             )
         },
         {
-            name: 'Reports', path: '#reports', icon: (
+            name: 'Reports', path: '/admin-reports', icon: (
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
                     <polyline points="14 2 14 8 20 8"></polyline>
@@ -54,7 +54,7 @@ const Sidebar = ({ isCollapsed, toggleSidebar, onLogout, isMobile }) => {
             )
         },
         {
-            name: 'Analytics', path: '#analytics', icon: (
+            name: 'Analytics', path: '/admin-analytics', icon: (
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <line x1="18" y1="20" x2="18" y2="10"></line>
                     <line x1="12" y1="20" x2="12" y2="4"></line>
@@ -68,13 +68,13 @@ const Sidebar = ({ isCollapsed, toggleSidebar, onLogout, isMobile }) => {
         <>
             {isMobile && !isCollapsed && (
                 <div
-                    className="fixed inset-0 bg-black/50 z-40 backdrop-blur-sm"
+                    className="fixed inset-0 bg-black/50 z-[998] backdrop-blur-sm"
                     onClick={toggleSidebar}
                 />
             )}
             <div
                 ref={sidebarRef}
-                className="h-screen bg-[#1a1a1a] text-white fixed left-0 top-0 z-50 overflow-hidden flex flex-col shadow-2xl border-r border-stone-800"
+                className="h-screen bg-[#1a1a1a] text-white fixed left-0 top-0 z-[999] overflow-hidden flex flex-col shadow-2xl border-r border-stone-800"
                 style={{ width: '280px' }}
             >
                 <div className="p-6 flex items-center justify-between h-20">
@@ -101,7 +101,7 @@ const Sidebar = ({ isCollapsed, toggleSidebar, onLogout, isMobile }) => {
                             <Link
                                 to={item.path}
                                 onClick={handleLinkClick}
-                                className={`flex items-center gap-4 px-3 py-3 rounded-xl transition-all duration-300 ${location.pathname === item.path || (location.hash === item.path)
+                                className={`flex items-center gap-4 px-3 py-3 rounded-xl transition-all duration-300 ${location.pathname === item.path
                                     ? 'bg-[#8ED462] text-black font-medium shadow-lg shadow-[#8ED462]/20'
                                     : 'text-stone-400 hover:bg-stone-800 hover:text-white'
                                     }`}

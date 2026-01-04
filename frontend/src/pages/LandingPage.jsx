@@ -85,7 +85,7 @@ const LandingPage = () => {
     }, { scope: container });
 
     return (
-        <div ref={container} className="w-full font-sans selection:bg-black selection:text-white relative">
+        <div ref={container} className="w-full font-sans relative select-none" onContextMenu={(e) => e.preventDefault()} onCopy={(e) => e.preventDefault()}>
             <Navbar onOpenReport={() => setIsReportOpen(true)} />
 
             <section className="sticky top-0 w-full h-screen flex flex-col items-center justify-center pt-32 pb-20 px-4 text-center z-0">

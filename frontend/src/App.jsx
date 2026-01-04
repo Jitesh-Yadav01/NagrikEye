@@ -6,6 +6,8 @@ import LoadingScreen from "./components/LoadingScreen";
 import LandingPage from "./pages/LandingPage";
 import Posts from "./pages/Posts";
 import AdminDashboard from "./pages/AdminDashboard";
+import AdminReports from "./pages/AdminReports";
+import AdminAnalytics from "./pages/AdminAnalytics";
 
 function App() {
   const { user } = useAuth();
@@ -23,6 +25,9 @@ function App() {
         <Route path="/login" element={<Auth />} />
 
         <Route path="/dashboard" element={<AdminDashboard />} />
+        <Route path="/admin-dashboard" element={<AdminDashboard />} />
+        <Route path="/admin-reports" element={<AdminReports />} />
+        <Route path="/admin-analytics" element={<AdminAnalytics />} />
       </Routes>
     </div>
   );
