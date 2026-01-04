@@ -19,11 +19,24 @@ const AdminDashboard = () => {
     const [reports, setReports] = useState([]);
     const [loading, setLoading] = useState(true);
     const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
+    const [isMobile, setIsMobile] = useState(false);
 
     const [statusFilter, setStatusFilter] = useState('all');
     const [categoryFilter, setCategoryFilter] = useState('all');
     const [searchQuery, setSearchQuery] = useState('');
     const [isCategoryDropdownOpen, setIsCategoryDropdownOpen] = useState(false);
+
+    useEffect(() => {
+        const handleResize = () => {
+            const mobile = window.innerWidth < 768;
+            setIsMobile(mobile);
+            if (mobile) setIsSidebarCollapsed(true);
+        };
+
+        handleResize();
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
     useEffect(() => {
         if (!user) {
@@ -73,11 +86,16 @@ const AdminDashboard = () => {
     }, { scope: container, dependencies: [loading] });
 
     useGSAP(() => {
-        gsap.fromTo('.issue-row',
-            { y: 10, opacity: 0 },
-            { y: 0, opacity: 1, duration: 0.3, stagger: 0.05, ease: 'power2.out' }
-        );
-    }, { scope: container, dependencies: [statusFilter, categoryFilter, searchQuery, reports] });
+        if (loading || !container.current) return;
+
+        const rows = container.current.querySelectorAll('.issue-row');
+        if (rows.length > 0) {
+            gsap.fromTo(rows,
+                { y: 10, opacity: 0 },
+                { y: 0, opacity: 1, duration: 0.3, stagger: 0.05, ease: 'power2.out' }
+            );
+        }
+    }, { scope: container, dependencies: [statusFilter, categoryFilter, searchQuery, reports, loading] });
 
 
     const handleStatusUpdate = async (id, newStatus) => {
@@ -153,21 +171,41 @@ const AdminDashboard = () => {
                 isCollapsed={isSidebarCollapsed}
                 toggleSidebar={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
                 onLogout={handleLogout}
+                isMobile={isMobile}
             />
 
             <main
-                className="flex-1 transition-all duration-500 ease-in-out p-6 lg:p-12"
-                style={{ marginLeft: isSidebarCollapsed ? '80px' : '280px' }}
+                className="flex-1 transition-all duration-500 ease-in-out p-6 lg:p-12 w-full"
+                style={{ marginLeft: isMobile ? '0px' : (isSidebarCollapsed ? '80px' : '280px') }}
             >
                 <div className="max-w-[1600px] mx-auto">
 
-                    <div className="dash-header mb-8 flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
+                    <div className="dash-header mb-8 flex flex-col md:flex-row justify-between items-start md:items-end gap-4 relative">
+
+                        {/* Mobile Header / Hamburger */}
+                        {isMobile && (
+                            <div className="w-full flex items-center justify-between mb-2">
+                                <button
+                                    onClick={() => setIsSidebarCollapsed(false)}
+                                    className="p-3 bg-white rounded-xl border border-stone-200 shadow-sm text-[#1a1a1a] active:scale-95 transition-transform"
+                                >
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                                    </svg>
+                                </button>
+                                <div className="text-sm font-bold text-[#8ED462] tracking-wider uppercase">NagrikEye</div>
+                            </div>
+                        )}
+
                         <div>
                             <h1 className="text-4xl font-bold tracking-tight mb-2">Dashboard Overview</h1>
                             <p className="text-stone-500">Welcome back, Admin</p>
                         </div>
-                        <div className="flex gap-3">
-                            <button onClick={handleExport} className="px-5 py-2.5 bg-black text-white rounded-xl text-sm font-medium hover:bg-gray-800 transition-colors flex items-center gap-2 cursor-pointer">
+
+                        <div className="flex gap-3 w-full md:w-auto">
+                            <button onClick={handleExport} className="flex-1 md:flex-none justify-center px-5 py-2.5 bg-black text-white rounded-xl text-sm font-medium hover:bg-gray-800 transition-colors flex items-center gap-2 cursor-pointer">
                                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                     <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
                                     <polyline points="7 10 12 15 17 10"></polyline>
