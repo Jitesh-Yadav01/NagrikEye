@@ -88,7 +88,13 @@ const LandingPage = () => {
         <div ref={container} className="w-full font-sans relative select-none" onContextMenu={(e) => e.preventDefault()} onCopy={(e) => e.preventDefault()}>
             <Navbar onOpenReport={() => setIsReportOpen(true)} />
 
-            <section className="sticky top-0 w-full h-screen flex flex-col items-center justify-center pt-32 pb-20 px-4 text-center z-0">
+            <section
+                className="sticky top-0 w-full h-screen flex flex-col items-center justify-center pt-32 pb-20 px-4 text-center z-0"
+                style={{
+                    background: 'radial-gradient(circle at 50% 40%, #a6e676 0%, #8ed462 100%)',
+                    backgroundColor: '#8ed462'
+                }}
+            >
 
                 <h1 className="text-[#2c2e2a] font-medium leading-[0.9] tracking-[-0.04em] mb-6 text-[clamp(60px,10vw,150px)]">
                     <div className="overflow-hidden">

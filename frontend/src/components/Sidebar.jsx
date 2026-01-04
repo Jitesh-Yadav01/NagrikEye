@@ -61,6 +61,23 @@ const Sidebar = ({ isCollapsed, toggleSidebar, onLogout, isMobile }) => {
                     <line x1="6" y1="20" x2="6" y2="14"></line>
                 </svg>
             )
+        },
+        {
+            name: 'AI Assistant', path: '/admin-ai', icon: (
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M12 2a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2 2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z"></path>
+                    <path d="M12 18a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-2z"></path>
+                    <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"></path>
+                </svg>
+            )
+        },
+        {
+            name: 'AI History', path: '/admin-ai-history', icon: (
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M12 8v4l3 3"></path>
+                    <circle cx="12" cy="12" r="10"></circle>
+                </svg>
+            )
         }
     ];
 

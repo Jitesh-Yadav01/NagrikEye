@@ -8,6 +8,8 @@ import Posts from "./pages/Posts";
 import AdminDashboard from "./pages/AdminDashboard";
 import AdminReports from "./pages/AdminReports";
 import AdminAnalytics from "./pages/AdminAnalytics";
+import AdminAI from "./pages/AdminAI";
+import AdminAIHistory from "./pages/AdminAIHistory";
 
 function App() {
   const { user } = useAuth();
@@ -28,6 +30,8 @@ function App() {
         <Route path="/admin-dashboard" element={<AdminDashboard />} />
         <Route path="/admin-reports" element={<AdminReports />} />
         <Route path="/admin-analytics" element={<AdminAnalytics />} />
+        <Route path="/admin-ai" element={<AdminAI />} />
+        <Route path="/admin-ai-history" element={<AdminAIHistory />} />
       </Routes>
     </div>
   );

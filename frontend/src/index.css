@@ -1,5 +1,8 @@
 @import "tailwindcss";
-html { scroll-behavior: smooth; }
+
+html {
+    scroll-behavior: smooth;
+}
 
 @theme {
     --font-sans: "Inter", sans-serif;
@@ -12,7 +15,6 @@ html {
 
 html,
 body {
-    background: radial-gradient(circle at 50% 40%, #a6e676 0%, #8ed462 100%);
-    background-color: #8ed462;
+    background-color: #F5F5F2;
     font-family: var(--font-sans);
 }
