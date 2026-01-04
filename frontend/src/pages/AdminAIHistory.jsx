@@ -3,24 +3,13 @@ import { db } from '../firebase/firebase';
 import { collection, query, orderBy, onSnapshot, deleteDoc, doc } from 'firebase/firestore';
 import Sidebar from '../components/Sidebar';
 import { useNavigate } from 'react-router-dom';
+import { useSidebar } from '../hooks/useSidebar';
 
 const AdminAIHistory = () => {
     const [sessions, setSessions] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
-    const [isMobile, setIsMobile] = useState(false);
+    const { isSidebarCollapsed, toggleSidebar, isMobile } = useSidebar();
     const navigate = useNavigate();
-
-    useEffect(() => {
-        const handleResize = () => {
-            const mobile = window.innerWidth < 768;
-            setIsMobile(mobile);
-            if (mobile) setIsSidebarCollapsed(true);
-        };
-        handleResize();
-        window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
-    }, []);
 
     useEffect(() => {
         const q = query(collection(db, 'ai_sessions'), orderBy('createdAt', 'desc'));
@@ -51,7 +40,7 @@ const AdminAIHistory = () => {
         <div className="min-h-screen bg-[#F5F5F2] font-sans flex text-[#1a1a1a]">
             <Sidebar
                 isCollapsed={isSidebarCollapsed}
-                toggleSidebar={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
+                toggleSidebar={toggleSidebar}
                 isMobile={isMobile}
             />
 
