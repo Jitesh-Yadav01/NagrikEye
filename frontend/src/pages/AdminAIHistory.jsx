@@ -49,7 +49,21 @@ const AdminAIHistory = () => {
                 style={{ marginLeft: isMobile ? '0px' : (isSidebarCollapsed ? '80px' : '280px') }}
             >
                 <div className="max-w-4xl mx-auto">
-                    <h1 className="text-3xl font-bold tracking-tight mb-8">Chat History</h1>
+                    <div className="flex items-center gap-3 mb-8">
+                        {isMobile && (
+                            <button
+                                onClick={toggleSidebar}
+                                className="p-2 bg-white rounded-lg border border-stone-200 shadow-sm text-[#1a1a1a] active:scale-95 transition-transform"
+                            >
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                                </svg>
+                            </button>
+                        )}
+                        <h1 className="text-3xl font-bold tracking-tight">Chat History</h1>
+                    </div>
 
                     {loading ? (
                         <div className="flex justify-center p-12">

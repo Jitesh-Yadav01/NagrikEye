@@ -294,10 +294,24 @@ const AdminAI = () => {
             >
                 <div className="flex-1 flex flex-col gap-6 h-full overflow-hidden">
 
-                    <div className="flex items-center justify-between shrink-0">
-                        <h1 className="text-3xl font-bold tracking-tight text-[#1a1a1a]">
-                            <span className="text-[#8ED462]">AI</span> Insight Hub
-                        </h1>
+                    <div className="flex items-center justify-between shrink-0 gap-4">
+                        <div className="flex items-center gap-3">
+                            {isMobile && (
+                                <button
+                                    onClick={toggleSidebar}
+                                    className="p-2 bg-white rounded-lg border border-stone-200 shadow-sm text-[#1a1a1a] active:scale-95 transition-transform"
+                                >
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                                    </svg>
+                                </button>
+                            )}
+                            <h1 className="text-3xl font-bold tracking-tight text-[#1a1a1a]">
+                                <span className="text-[#8ED462]">AI</span> Insight Hub
+                            </h1>
+                        </div>
 
 
                         <div className="relative">
