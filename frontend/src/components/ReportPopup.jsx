@@ -357,7 +357,7 @@ const ReportPopup = ({ isOpen, onClose }) => {
 
                   {isDropdownOpen && (
                     <div className="absolute top-full left-0 w-full bg-white rounded-xl shadow-xl mt-2 py-2 z-50 animate-in fade-in zoom-in-95 duration-200 border border-gray-100">
-                      {reportType === "hazard" ? [
+                      {(reportType === "hazard" ? [
                         "Potholes / Road Damage",
                         "Illegal Construction",
                         "Stray Cattle",
@@ -369,7 +369,7 @@ const ReportPopup = ({ isOpen, onClose }) => {
                         "Public Nuisance",
                         "Neighborhood Dispute",
                         "Other Social Issue",
-                      ].map((option) => (
+                      ]).map((option) => (
                         <div
                           key={option}
                           className="px-6 py-3 text-lg hover:bg-[#F5F1E4] cursor-pointer transition-colors text-[#2c2e2a]"
