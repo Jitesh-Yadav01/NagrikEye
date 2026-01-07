@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 
-const FilterBar = ({ filter, setFilter, sort, setSort }) => {
+const FilterBar = ({ setFilter, sort, setSort }) => {
     const [isSortOpen, setIsSortOpen] = useState(false);
     const [mainCategory, setMainCategory] = useState("");
     const [subCategory, setSubCategory] = useState("");
@@ -25,6 +25,7 @@ const FilterBar = ({ filter, setFilter, sort, setSort }) => {
     useEffect(() => {
         if (mainCategory === "" || mainCategory === "All") {
             setFilter("");
+            // eslint-disable-next-line react-hooks/set-state-in-effect
             setSubCategory("");
         } else if (subCategory && subCategory !== "All") {
             setFilter(subCategory);

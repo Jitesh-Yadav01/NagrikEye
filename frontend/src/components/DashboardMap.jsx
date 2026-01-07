@@ -67,6 +67,7 @@ const DashboardMap = ({ reports }) => {
             })
             .filter(marker => marker !== null);
 
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setMarkers(parsedMarkers);
     }, [reports]);
 

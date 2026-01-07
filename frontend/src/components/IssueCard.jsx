@@ -10,7 +10,6 @@ const IssueCard = ({ report, onUpvote, currentUserId }) => {
         upvotes,
         createdAt,
         id,
-        parentId,
         status = "pending",
         upvotedBy = []
     } = report;

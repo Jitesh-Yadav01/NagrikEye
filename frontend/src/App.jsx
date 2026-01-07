@@ -10,9 +10,10 @@ import AdminReports from "./pages/AdminReports";
 import AdminAnalytics from "./pages/AdminAnalytics";
 import AdminAI from "./pages/AdminAI";
 import AdminAIHistory from "./pages/AdminAIHistory";
+import VistaApp from "./pages/VistaApp";
 
 function App() {
-  const { user } = useAuth();
+  useAuth();
   const location = useLocation();
   const [isLoading, setIsLoading] = useState(location.pathname === "/");
 
@@ -25,6 +26,7 @@ function App() {
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<Auth />} />
+        <Route path="/vista" element={<VistaApp />} />
 
         <Route path="/dashboard" element={<AdminDashboard />} />
         <Route path="/admin-dashboard" element={<AdminDashboard />} />

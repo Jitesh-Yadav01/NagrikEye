@@ -76,7 +76,7 @@ const AdminAI = () => {
         } else if (!API_KEY && !summary) {
             setSummary("API Key required for new analysis.");
         }
-    }, [loading, reports, API_KEY]);
+    }, [loading, reports, API_KEY, summary, summaryRange, generateSummary]);
 
     useEffect(() => {
         chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -364,9 +364,9 @@ const AdminAI = () => {
                                     <div className="prose prose-stone prose-sm max-w-none">
                                         <ReactMarkdown
                                             components={{
-                                                strong: ({ node, ...props }) => <span className="font-bold text-[#1a1a1a] bg-[#e9fabe] px-1 rounded-sm" {...props} />,
-                                                ul: ({ node, ...props }) => <ul className="list-disc list-outside ml-4 space-y-1" {...props} />,
-                                                li: ({ node, ...props }) => <li className="pl-1 marker:text-[#8ED462]" {...props} />
+                                                strong: ({ ...props }) => <span className="font-bold text-[#1a1a1a] bg-[#e9fabe] px-1 rounded-sm" {...props} />,
+                                                ul: ({ ...props }) => <ul className="list-disc list-outside ml-4 space-y-1" {...props} />,
+                                                li: ({ ...props }) => <li className="pl-1 marker:text-[#8ED462]" {...props} />
                                             }}
                                         >
                                             {summary || "No data available."}
@@ -403,8 +403,8 @@ const AdminAI = () => {
                                             }`}>
                                             <ReactMarkdown
                                                 components={{
-                                                    p: ({ node, ...props }) => <p className="mb-2 last:mb-0" {...props} />,
-                                                    strong: ({ node, ...props }) => <span className="font-semibold" {...props} />
+                                                    p: ({ ...props }) => <p className="mb-2 last:mb-0" {...props} />,
+                                                    strong: ({ ...props }) => <span className="font-semibold" {...props} />
                                                 }}
                                             >
                                                 {msg.content}

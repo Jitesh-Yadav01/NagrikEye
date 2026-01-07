@@ -17,13 +17,22 @@ const firebaseConfig = {
   measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID
 };
 
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+// Verify Firebase config is loaded
+if (!firebaseConfig.apiKey) {
+  console.error("Firebase configuration is missing. Please check your environment variables.");
+  console.warn("Expected env variables: VITE_FIREBASE_API_KEY, VITE_FIREBASE_AUTH_DOMAIN, etc.");
+}
 
+let app;
+try {
+  app = initializeApp(firebaseConfig);
+  getAnalytics(app);
+} catch (error) {
+  console.error("Failed to initialize Firebase:", error);
+}
 
 export const auth = getAuth(app);
 export const googleProvider = new GoogleAuthProvider();
-
 
 export const db = getFirestore(app);
 
