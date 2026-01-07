@@ -2,21 +2,36 @@ import React, { useState, useRef, useEffect } from 'react';
 
 const FilterBar = ({ filter, setFilter, sort, setSort }) => {
     const [isSortOpen, setIsSortOpen] = useState(false);
+    const [mainCategory, setMainCategory] = useState("");
+    const [subCategory, setSubCategory] = useState("");
     const sortRef = useRef(null);
 
-    const categories = [
+    const mainCategories = [
         "All",
-        "Potholes / Road Damage",
-        "Illegal Construction",
-        "Stray Cattle",
-        "Garbage / Drainage",
-        "Other"
+        "Hazard Issue",
+        "Social Issue"
     ];
+
+    const subCategories = {
+        "Hazard Issue": ["All", "Potholes / Road Damage", "Illegal Construction", "Stray Cattle", "Garbage / Drainage", "Other"],
+        "Social Issue": ["All", "Noise Pollution", "Community Safety", "Public Nuisance", "Neighborhood Dispute", "Other Social Issue"]
+    };
 
     const sortOptions = [
         { value: "newest", label: "Newest First" },
         { value: "popular", label: "Most Voted" }
     ];
+
+    useEffect(() => {
+        if (mainCategory === "" || mainCategory === "All") {
+            setFilter("");
+            setSubCategory("");
+        } else if (subCategory && subCategory !== "All") {
+            setFilter(subCategory);
+        } else {
+            setFilter("");
+        }
+    }, [mainCategory, subCategory, setFilter]);
 
     useEffect(() => {
         function handleClickOutside(event) {
@@ -31,68 +46,88 @@ const FilterBar = ({ filter, setFilter, sort, setSort }) => {
     }, []);
 
     return (
-        <div className="flex flex-col md:flex-row gap-4 mb-8 items-start md:items-center justify-between bg-white p-4 rounded-2xl shadow-sm border border-stone-200">
+        <div className="flex flex-col gap-4 mb-8 bg-white p-4 rounded-2xl shadow-sm border border-stone-200">
 
-            {/* Category Filter */}
-            <div className="flex flex-wrap gap-2">
-                {categories.map((cat) => (
-                    <button
-                        key={cat}
-                        onClick={() => setFilter(cat === "All" ? "" : cat)}
-                        className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 cursor-pointer ${(filter === cat || (cat === "All" && filter === ""))
-                            ? "bg-[#339966] text-white shadow-md shadow-green-500/20"
-                            : "bg-stone-100 text-stone-600 hover:bg-stone-200"
-                            }`}
-                    >
-                        {cat}
-                    </button>
-                ))}
-            </div>
+            <div className="flex flex-col md:flex-row gap-4 items-start md:items-center justify-between">
+                <div className="flex flex-col gap-3 flex-1">
+                    <div className="flex flex-wrap gap-2">
+                        {mainCategories.map((cat) => (
+                            <button
+                                key={cat}
+                                onClick={() => {
+                                    setMainCategory(cat === "All" ? "" : cat);
+                                    setSubCategory("");
+                                }}
+                                className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 cursor-pointer ${(mainCategory === cat || (cat === "All" && mainCategory === ""))
+                                    ? "bg-[#339966] text-white shadow-md shadow-green-500/20"
+                                    : "bg-stone-100 text-stone-600 hover:bg-stone-200"
+                                    }`}
+                            >
+                                {cat}
+                            </button>
+                        ))}
+                    </div>
 
-            {/* Sort Options */}
-            <div className="flex items-center gap-2 min-w-[150px] relative" ref={sortRef}>
-                <span className="text-sm text-stone-400 font-medium whitespace-nowrap">Sort by:</span>
-
-                <div
-                    className="relative min-w-[140px]"
-                >
-                    <button
-                        onClick={() => setIsSortOpen(!isSortOpen)}
-                        className="w-full flex items-center justify-between gap-2 px-4 py-2 bg-white border border-stone-200 rounded-lg text-sm font-medium text-stone-700 hover:border-[#339966] transition-colors shadow-sm cursor-pointer"
-                    >
-                        {sortOptions.find(opt => opt.value === sort)?.label}
-                        <svg
-                            className={`w-4 h-4 text-stone-400 transition-transform duration-200 ${isSortOpen ? 'rotate-180' : ''}`}
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                        >
-                            <polyline points="6 9 12 15 18 9"></polyline>
-                        </svg>
-                    </button>
-
-                    {isSortOpen && (
-                        <div className="absolute top-full right-0 mt-1 w-full min-w-[160px] bg-white border border-stone-100 rounded-xl shadow-xl py-1 z-50 animate-in fade-in zoom-in-95 duration-200">
-                            {sortOptions.map((option) => (
+                    {mainCategory && mainCategory !== "All" && (
+                        <div className="flex flex-wrap gap-2">
+                            {subCategories[mainCategory]?.map((subCat) => (
                                 <button
-                                    key={option.value}
-                                    onClick={() => {
-                                        setSort(option.value);
-                                        setIsSortOpen(false);
-                                    }}
-                                    className={`w-full text-left px-4 py-2.5 text-sm transition-colors cursor-pointer ${sort === option.value
-                                            ? "bg-[#339966]/10 text-[#339966] font-semibold"
-                                            : "text-stone-600 hover:bg-stone-50"
+                                    key={subCat}
+                                    onClick={() => setSubCategory(subCat === "All" ? "" : subCat)}
+                                    className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 cursor-pointer ${(subCategory === subCat || (subCat === "All" && subCategory === ""))
+                                        ? "bg-[#339966] text-white shadow-md shadow-green-500/20"
+                                        : "bg-stone-100 text-stone-600 hover:bg-stone-200"
                                         }`}
                                 >
-                                    {option.label}
+                                    {subCat}
                                 </button>
                             ))}
                         </div>
                     )}
+                </div>
+
+                <div className="flex items-center gap-2 min-w-37.5 relative" ref={sortRef}>
+                    <span className="text-sm text-stone-400 font-medium whitespace-nowrap">Sort by:</span>
+
+                    <div className="relative min-w-35">
+                        <button
+                            onClick={() => setIsSortOpen(!isSortOpen)}
+                            className="w-full flex items-center justify-between gap-2 px-4 py-2 bg-white border border-stone-200 rounded-lg text-sm font-medium text-stone-700 hover:border-[#339966] transition-colors shadow-sm cursor-pointer"
+                        >
+                            {sortOptions.find(opt => opt.value === sort)?.label}
+                            <svg
+                                className={`w-4 h-4 text-stone-400 transition-transform duration-200 ${isSortOpen ? 'rotate-180' : ''}`}
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                            >
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </button>
+
+                        {isSortOpen && (
+                            <div className="absolute top-full right-0 mt-1 w-full min-w-40 bg-white border border-stone-100 rounded-xl shadow-xl py-1 z-50 animate-in fade-in zoom-in-95 duration-200">
+                                {sortOptions.map((option) => (
+                                    <button
+                                        key={option.value}
+                                        onClick={() => {
+                                            setSort(option.value);
+                                            setIsSortOpen(false);
+                                        }}
+                                        className={`w-full text-left px-4 py-2.5 text-sm transition-colors cursor-pointer ${sort === option.value
+                                                ? "bg-[#339966]/10 text-[#339966] font-semibold"
+                                                : "text-stone-600 hover:bg-stone-50"
+                                            }`}
+                                    >
+                                        {option.label}
+                                    </button>
+                                ))}
+                            </div>
+                        )}
+                    </div>
                 </div>
             </div>
         </div>

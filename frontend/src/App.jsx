@@ -1,4 +1,3 @@
-import CityView from "./pages/CityView";
 import React, { useState } from "react";
 import { useAuth } from "./context/AuthContext";
 import Auth from "./components/Auth";

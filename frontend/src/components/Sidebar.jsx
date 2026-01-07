@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef } from 'react';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { Link, useLocation } from 'react-router-dom';
@@ -85,13 +85,13 @@ const Sidebar = ({ isCollapsed, toggleSidebar, onLogout, isMobile }) => {
         <>
             {isMobile && !isCollapsed && (
                 <div
-                    className="fixed inset-0 bg-black/50 z-[998] backdrop-blur-sm"
+                    className="fixed inset-0 bg-black/50 z-998 backdrop-blur-sm"
                     onClick={toggleSidebar}
                 />
             )}
             <div
                 ref={sidebarRef}
-                className="h-screen bg-[#1a1a1a] text-white fixed left-0 top-0 z-[999] overflow-hidden flex flex-col shadow-2xl border-r border-stone-800"
+                className="h-screen bg-[#1a1a1a] text-white fixed left-0 top-0 z-999 overflow-hidden flex flex-col shadow-2xl border-r border-stone-800"
                 style={{ width: '280px' }}
             >
                 <div className="p-6 flex items-center justify-between h-20">
@@ -100,7 +100,7 @@ const Sidebar = ({ isCollapsed, toggleSidebar, onLogout, isMobile }) => {
                     </div>
                     <button
                         onClick={toggleSidebar}
-                        className="p-3 rounded-xl hover:bg-stone-800 transition-colors text-stone-400 hover:text-white active:scale-95 transition-transform"
+                        className="p-3 rounded-xl hover:bg-stone-800 transition-all text-stone-400 hover:text-white active:scale-95"
                     >
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                             {isCollapsed ? (
@@ -123,7 +123,7 @@ const Sidebar = ({ isCollapsed, toggleSidebar, onLogout, isMobile }) => {
                                     : 'text-stone-400 hover:bg-stone-800 hover:text-white'
                                     }`}
                             >
-                                <div className="flex-shrink-0 w-6 h-6">{item.icon}</div>
+                                <div className="shrink-0 w-6 h-6">{item.icon}</div>
                                 <span
                                     className={`whitespace-nowrap transition-all duration-300 ${isCollapsed && !isMobile ? 'opacity-0 translate-x-4' : 'opacity-100 translate-x-0'
                                         }`}
@@ -145,7 +145,7 @@ const Sidebar = ({ isCollapsed, toggleSidebar, onLogout, isMobile }) => {
                         onClick={onLogout}
                         className="flex items-center gap-4 px-3 py-3 w-full rounded-xl text-red-400 hover:bg-red-500/10 hover:text-red-300 transition-all duration-300 group"
                     >
-                        <div className="flex-shrink-0 w-6 h-6">
+                        <div className="shrink-0 w-6 h-6">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                 <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
                                 <polyline points="16 17 21 12 16 7"></polyline>

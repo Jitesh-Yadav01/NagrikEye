@@ -79,7 +79,7 @@ const DashboardMap = ({ reports }) => {
     ];
 
     return (
-        <div className="w-full h-[400px] rounded-2xl overflow-hidden shadow-sm border border-stone-100 z-0 relative">
+        <div className="w-full h-100 rounded-2xl overflow-hidden shadow-sm border border-stone-100 z-0 relative">
             <MapContainer
                 center={[18.6298, 73.7997]}
                 zoom={11}
@@ -100,7 +100,7 @@ const DashboardMap = ({ reports }) => {
                             <span className="font-medium text-xs text-[#1a1a1a]">{marker.location}</span>
                         </Tooltip>
                         <Popup>
-                            <div className="min-w-[150px]">
+                            <div className="min-w-37.5">
                                 <strong className="block mb-1 text-sm font-bold text-[#1a1a1a]" style={{ color: getCategoryColor(marker.category) }}>{marker.category}</strong>
                                 <p className="text-xs text-stone-600 line-clamp-2">{marker.description}</p>
                             </div>
@@ -109,7 +109,7 @@ const DashboardMap = ({ reports }) => {
                 ))}
             </MapContainer>
 
-            <div className="absolute bottom-4 right-4 bg-white/90 backdrop-blur-sm p-3 rounded-xl shadow-lg border border-stone-100 z-[1000] text-xs">
+            <div className="absolute bottom-4 right-4 bg-white/90 backdrop-blur-sm p-3 rounded-xl shadow-lg border border-stone-100 z-1000 text-xs">
                 <div className="font-bold text-[#1a1a1a] mb-2">Legend</div>
                 <div className="space-y-1.5">
                     {categories.map((cat) => (

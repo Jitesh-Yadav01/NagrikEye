@@ -111,7 +111,7 @@ const LandingPage = () => {
                     </p>
                 </div>
 
-                <div className="w-full max-w-4xl h-[300px] flex items-end justify-center">
+                <div className="w-full max-w-4xl h-75 flex items-end justify-center">
                     <div className="relative w-full h-full">
                         <img
                             src={civicImg}
@@ -124,16 +124,16 @@ const LandingPage = () => {
 
             <section id="mission" className="section-2-trigger relative w-full bg-[#F5F5F2] rounded-t-[50px] pt-32 pb-24 px-4 lg:px-12 z-10 shadow-[-10px_-10px_30px_rgba(0,0,0,0.05)] min-h-screen">
 
-                <div className="section-2-content max-w-[1300px] mx-auto mb-32">
+                <div className="section-2-content max-w-325 mx-auto mb-32">
                     <h2 className="text-[#2c2e2a] text-[28px] lg:text-[40px] leading-[1.2] font-medium max-w-3xl">
                         NagrikEye transforms everyday complaints into data-driven insights for faster decision-making, improved urban safety, and better governance.
                     </h2>
                 </div>
 
-                <div className="max-w-[1300px] mx-auto grid lg:grid-cols-2 gap-12 items-center">
+                <div className="max-w-325 mx-auto grid lg:grid-cols-2 gap-12 items-center">
 
                     <div className="hidden lg:flex justify-center">
-                        <img src={smartCityImg} alt="Smart City AI Analysis" className="sc-image w-full max-w-[800px] h-auto object-contain drop-shadow-xl" />
+                        <img src={smartCityImg} alt="Smart City AI Analysis" className="sc-image w-full max-w-200 h-auto object-contain drop-shadow-xl" />
                     </div>
 
                     <div className="flex flex-col items-start text-left">
@@ -148,7 +148,7 @@ const LandingPage = () => {
 
                             <button
                                 onClick={() => setIsReportOpen(true)}
-                                className="sc-btn px-8 py-3 bg-black text-white font-medium text-[16px] rounded-[12px] hover:bg-gray-800 transition-colors cursor-pointer"
+                                className="sc-btn px-8 py-3 bg-black text-white font-medium text-[16px] rounded-xl hover:bg-gray-800 transition-colors cursor-pointer"
                             >
                                 Report Issue
                             </button>

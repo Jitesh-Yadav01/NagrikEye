@@ -34,7 +34,7 @@ const Posts = () => {
     return () => unsubscribe();
   }, []);
 
-  const [deviceId, setDeviceId] = useState(() => {
+  const [deviceId] = useState(() => {
     let id = localStorage.getItem("nagrikeye_device_id");
     if (!id) {
       id = crypto.randomUUID();
@@ -71,7 +71,10 @@ const Posts = () => {
   };
 
   const filteredReports = reports
-    .filter((r) => filter ? r.selectedCategory === filter : true)
+    .filter((r) => {
+      if (!filter) return true;
+      return r.selectedCategory === filter;
+    })
     .sort((a, b) => {
       if (sort === "popular") {
         return (b.upvotes || 0) - (a.upvotes || 0);
