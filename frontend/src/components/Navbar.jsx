@@ -29,7 +29,6 @@ const Navbar = ({ onOpenReport }) => {
                 { label: 'Our Mission', hasDropdown: false, path: "#mission", isRoute: false },
                 { label: 'Community Feed', hasDropdown: false, path: "#reports", isRoute: false },
                 { label: 'Impact Map', hasDropdown: false, path: "#map", isRoute: false },
-                { label: 'City View', hasDropdown: false, path: "/city-view", isRoute: true }
               ].map((item) => (
                 <div key={item.label} className="relative group flex items-center justify-center px-6 h-[46.75px] cursor-pointer">
                   <span className="absolute inset-0 bg-[#F5F1E4] rounded-full opacity-0 scale-75 group-hover:opacity-100 group-hover:scale-100 transition-all duration-400 ease-[cubic-bezier(0.17,0.67,0.3,1.33)] z-0"></span>
