@@ -3,7 +3,6 @@ import { collection, query, orderBy, onSnapshot, doc, updateDoc, increment, arra
 import { db } from "../firebase/firebase";
 import IssueCard from "../components/IssueCard";
 import FilterBar from "../components/FilterBar";
-import { useAuth } from "../context/AuthContext";
 import { gsap } from 'gsap';
 import { useGSAP } from '@gsap/react';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -25,23 +24,24 @@ const Posts = () => {
         id: doc.id,
         ...doc.data(),
       }));
-      setReports(fetchedReports);
+      const uniqueReports = fetchedReports.filter((report, index, self) =>
+        index === self.findIndex((r) => r.id === report.id)
+      );
+      setReports(uniqueReports);
       setLoading(false);
     });
 
     return () => unsubscribe();
   }, []);
 
-  const [deviceId, setDeviceId] = useState("");
-
-  useEffect(() => {
+  const [deviceId, setDeviceId] = useState(() => {
     let id = localStorage.getItem("nagrikeye_device_id");
     if (!id) {
       id = crypto.randomUUID();
       localStorage.setItem("nagrikeye_device_id", id);
     }
-    setDeviceId(id);
-  }, []);
+    return id;
+  });
 
   const handleUpvote = async (reportId) => {
     if (!deviceId) return;
@@ -117,7 +117,7 @@ const Posts = () => {
 
   return (
     <section ref={container} id="reports" className="w-full bg-[#F5F5F2] pt-0 pb-32 px-4 lg:px-12 relative z-10 font-sans">
-      <div className="max-w-[1400px] mx-auto">
+      <div className="max-w-350 mx-auto">
 
         <div className="posts-header mb-12 text-center md:text-left">
           <h2 className="text-[50px] lg:text-[80px] leading-[0.95] font-medium text-[#2c2e2a] mb-6 tracking-tight">Community Feed</h2>

@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 
 const ReportPopup = ({ isOpen, onClose }) => {
   const { user } = useAuth();
+  const [reportType, setReportType] = useState(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
   const [selectedCategory, setSelectedCategory] = useState("");
@@ -17,6 +18,7 @@ const ReportPopup = ({ isOpen, onClose }) => {
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   const [coordinates, setCoordinates] = useState(null);
+  const [socialCondition, setSocialCondition] = useState("");
 
   useEffect(() => {
     if (user) {
@@ -80,11 +82,13 @@ const ReportPopup = ({ isOpen, onClose }) => {
   }, [isOpen]);
 
   const resetForm = () => {
+    setReportType(null);
     setLocation("");
     setCoordinates(null);
     setSelectedCategory("");
     setDescription("");
     setSelectedFile(null);
+    setSocialCondition("");
   };
 
   useEffect(() => {
@@ -141,6 +145,8 @@ const ReportPopup = ({ isOpen, onClose }) => {
         parentEmail: email,
         imageFile: imageUrl,
         createdAt: serverTimestamp(),
+        socialCondition,
+        reportType: reportType || "hazard",
       });
 
       setIsSubmitted(true);
@@ -153,7 +159,7 @@ const ReportPopup = ({ isOpen, onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-end justify-center">
+    <div className="fixed inset-0 z-100 flex items-end justify-center">
       <div
         className="absolute inset-0 bg-black/40 transition-opacity"
         onClick={onClose}
@@ -179,7 +185,7 @@ const ReportPopup = ({ isOpen, onClose }) => {
         </button>
 
         {isSubmitted ? (
-          <div className="w-full max-w-[1300px] mx-auto p-12 lg:p-20 text-center flex flex-col items-center justify-center min-h-[400px]">
+          <div className="w-full max-w-325 mx-auto p-12 lg:p-20 text-center flex flex-col items-center justify-center min-h-100">
             <div className="w-24 h-24 bg-[#8ED462] rounded-full flex items-center justify-center mb-8 shadow-lg animate-bounce-subtle">
               <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="text-[#0b3b08]">
                 <polyline points="20 6 9 17 4 12"></polyline>
@@ -196,10 +202,68 @@ const ReportPopup = ({ isOpen, onClose }) => {
               Close
             </button>
           </div>
-        ) : (
-          <div className="w-full max-w-[1300px] mx-auto p-8 lg:p-12 pt-16">
+        ) : reportType === null ? (
+          <div className="w-full max-w-325 mx-auto p-8 lg:p-12 pt-16">
             <h2 className="text-[32px] lg:text-[48px] font-medium text-[#2c2e2a] mb-8 relative inline-block">
-              Report a Hazard
+              What would you like to report?
+              <svg
+                className="absolute -bottom-2 left-0 w-full"
+                height="8"
+                viewBox="0 0 100 12"
+                preserveAspectRatio="none"
+              >
+                <path
+                  d="M0 6 Q 5 0 10 6 T 20 6 T 30 6 T 40 6 T 50 6 T 60 6 T 70 6 T 80 6 T 90 6 T 100 6"
+                  stroke="#8ED462"
+                  strokeWidth="3"
+                  fill="none"
+                />
+              </svg>
+            </h2>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl">
+              <button
+                onClick={() => setReportType("hazard")}
+                className="group relative overflow-hidden bg-white border-2 border-stone-200 rounded-[30px] p-12 hover:border-[#8ED462] transition-all hover:shadow-xl cursor-pointer"
+              >
+                <div className="absolute inset-0 bg-linear-to-br from-[#8ED462]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                <div className="relative z-10">
+                  <div className="text-6xl mb-6">⚠️</div>
+                  <h3 className="text-[28px] font-medium text-[#2c2e2a] mb-4">Hazard Report</h3>
+                  <p className="text-[16px] text-gray-600 leading-relaxed">
+                    Report potholes, illegal construction, garbage, drainage issues, or other civic hazards
+                  </p>
+                </div>
+              </button>
+
+              <button
+                onClick={() => setReportType("social")}
+                className="group relative overflow-hidden bg-white border-2 border-stone-200 rounded-[30px] p-12 hover:border-[#8ED462] transition-all hover:shadow-xl cursor-pointer"
+              >
+                <div className="absolute inset-0 bg-linear-to-br from-[#8ED462]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                <div className="relative z-10">
+                  <div className="text-6xl mb-6">🏘️</div>
+                  <h3 className="text-[28px] font-medium text-[#2c2e2a] mb-4">Social Condition</h3>
+                  <p className="text-[16px] text-gray-600 leading-relaxed">
+                    Report social issues, community concerns, or neighborhood conditions that need attention
+                  </p>
+                </div>
+              </button>
+            </div>
+          </div>
+        ) : (
+          <div className="w-full max-w-325 mx-auto p-8 lg:p-12 pt-16">
+            <button
+              onClick={() => setReportType(null)}
+              className="mb-6 flex items-center gap-2 text-gray-600 hover:text-[#2c2e2a] transition-colors cursor-pointer"
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <polyline points="15 18 9 12 15 6"></polyline>
+              </svg>
+              Back to selection
+            </button>
+            <h2 className="text-[32px] lg:text-[48px] font-medium text-[#2c2e2a] mb-8 relative inline-block">
+              Report a {reportType === "hazard" ? "Hazard" : "Social Condition"}
               <svg
                 className="absolute -bottom-2 left-0 w-full"
                 height="8"
@@ -219,7 +283,7 @@ const ReportPopup = ({ isOpen, onClose }) => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-8">
                 <div className="flex flex-col gap-2 relative">
                   <label className="text-[15px] font-bold text-[#2c2e2a] uppercase tracking-wide">
-                    LOCATION OF HAZARD *
+                    LOCATION {reportType === "hazard" ? "OF HAZARD" : ""} *
                   </label>
                   <div className="relative">
                     <input
@@ -293,12 +357,18 @@ const ReportPopup = ({ isOpen, onClose }) => {
 
                   {isDropdownOpen && (
                     <div className="absolute top-full left-0 w-full bg-white rounded-xl shadow-xl mt-2 py-2 z-50 animate-in fade-in zoom-in-95 duration-200 border border-gray-100">
-                      {[
+                      {reportType === "hazard" ? [
                         "Potholes / Road Damage",
                         "Illegal Construction",
                         "Stray Cattle",
                         "Garbage / Drainage",
                         "Other",
+                      ] : [
+                        "Noise Pollution",
+                        "Community Safety",
+                        "Public Nuisance",
+                        "Neighborhood Dispute",
+                        "Other Social Issue",
                       ].map((option) => (
                         <div
                           key={option}

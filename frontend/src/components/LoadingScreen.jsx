@@ -18,7 +18,7 @@ const LoadingScreen = ({ onLoadingComplete }) => {
     return (
         <div
             ref={containerRef}
-            className="fixed inset-0 z-[100] flex items-center justify-center bg-[#f5f1e4]"
+                className="fixed inset-0 z-100 flex items-center justify-center bg-[#f5f1e4]"
         >
             <LogoAnimation onComplete={handleLogoAnimationComplete} />
         </div>

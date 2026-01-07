@@ -25,15 +25,20 @@ const Navbar = ({ onOpenReport }) => {
 
             <div className="flex items-center gap-1 mr-6">
               {[
-                { label: 'Home', hasDropdown: false, path: "/" },
-                { label: 'Our Mission', hasDropdown: false, path: "#mission" },
-                { label: 'Community Feed', hasDropdown: false, path: "#reports" },
-                { label: 'Impact Map', hasDropdown: false, path: "#map" }
+                { label: 'Home', hasDropdown: false, path: "/", isRoute: true },
+                { label: 'Our Mission', hasDropdown: false, path: "#mission", isRoute: false },
+                { label: 'Community Feed', hasDropdown: false, path: "#reports", isRoute: false },
+                { label: 'Impact Map', hasDropdown: false, path: "#map", isRoute: false },
+                { label: 'City View', hasDropdown: false, path: "/city-view", isRoute: true }
               ].map((item) => (
-                <div key={item.label} className="relative group flex items-center justify-center px-[24px] h-[46.75px] cursor-pointer">
+                <div key={item.label} className="relative group flex items-center justify-center px-6 h-[46.75px] cursor-pointer">
                   <span className="absolute inset-0 bg-[#F5F1E4] rounded-full opacity-0 scale-75 group-hover:opacity-100 group-hover:scale-100 transition-all duration-400 ease-[cubic-bezier(0.17,0.67,0.3,1.33)] z-0"></span>
                   <div className="relative z-10 flex items-center gap-1.5">
-                    <a href={item.path} className="text-[18px] font-medium text-[#2C2E2A]">{item.label}</a>
+                    {item.isRoute ? (
+                      <Link to={item.path} className="text-[18px] font-medium text-[#2C2E2A]">{item.label}</Link>
+                    ) : (
+                      <a href={item.path} className="text-[18px] font-medium text-[#2C2E2A]">{item.label}</a>
+                    )}
                     {item.hasDropdown && (
                       <svg className="w-2.5 h-2.5 mt-0.5 text-[#1a1a1a]" viewBox="0 0 10 6" fill="none" aria-hidden="true">
                         <path fill="none" stroke="currentColor" strokeWidth="1.5" d="m1 1 4 4 4-4"></path>
@@ -131,18 +136,21 @@ const Navbar = ({ onOpenReport }) => {
               }`}
           >
             <div className="bg-white rounded-[10px] shadow-sm flex flex-col py-2">
-              <a href="/" className="px-5 py-3 text-[18px] font-medium text-[#1a1a1a] border-b border-gray-100 hover:bg-gray-50 flex items-center justify-between">
+              <Link to="/" className="px-5 py-3 text-[18px] font-medium text-[#1a1a1a] border-b border-gray-100 hover:bg-gray-50 flex items-center justify-between">
                 Home
-              </a>
+              </Link>
               <a href="#mission" className="px-5 py-3 text-[18px] font-medium text-[#1a1a1a] border-b border-gray-100 hover:bg-gray-50 flex items-center justify-between">
                 Our Mission
               </a>
               <a href="#reports" className="px-5 py-3 text-[18px] font-medium text-[#1a1a1a] border-b border-gray-100 hover:bg-gray-50 flex items-center justify-between">
                 Community Feed
               </a>
-              <a href="#map" className="px-5 py-3 text-[18px] font-medium text-[#1a1a1a] hover:bg-gray-50">
+              <a href="#map" className="px-5 py-3 text-[18px] font-medium text-[#1a1a1a] border-b border-gray-100 hover:bg-gray-50 flex items-center justify-between">
                 Impact Map
               </a>
+              <Link to="/city-view" className="px-5 py-3 text-[18px] font-medium text-[#1a1a1a] hover:bg-gray-50">
+                City View
+              </Link>
               {user && (
                 <Link to="/dashboard" className="px-5 py-3 text-[18px] font-medium text-[#339966] border-t border-gray-100 hover:bg-gray-50">
                   Dashboard
