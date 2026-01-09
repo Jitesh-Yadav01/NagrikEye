@@ -125,9 +125,12 @@ const LandingPage = () => {
             <section id="mission" className="section-2-trigger relative w-full bg-[#F5F5F2] rounded-t-[50px] pt-32 pb-24 px-4 lg:px-12 z-10 shadow-[-10px_-10px_30px_rgba(0,0,0,0.05)] min-h-screen">
 
                 <div className="section-2-content max-w-325 mx-auto mb-32">
-                    <h2 className="text-[#2c2e2a] text-[28px] lg:text-[40px] leading-[1.2] font-medium max-w-3xl">
+                    <h1 className="text-[#2c2e2a] text-[50px] lg:text-[80px] leading-[0.95] font-medium max-w-3xl mb-6 tracking-tight">
+                         Our Mission
+                    </h1>
+                    <p className="text-[#2c2e2a] text-[18px] lg:text-[20px] leading-relaxed max-w-3xl opacity-80">
                         NagrikEye transforms everyday complaints into data-driven insights for faster decision-making, improved urban safety, and better governance.
-                    </h2>
+                    </p>
                 </div>
 
                 <div className="max-w-325 mx-auto grid lg:grid-cols-2 gap-12 items-center">

@@ -73,7 +73,7 @@ const Posts = () => {
   const filteredReports = reports
     .filter((r) => {
       if (!filter) return true;
-      if (filter === "hazard" || filter === "social") {
+      if (filter === "hazard" || filter === "social" || filter === "electricity" || filter === "gas" || filter === "municipal") {
         return r.reportType === filter;
       }
       return r.selectedCategory === filter;
