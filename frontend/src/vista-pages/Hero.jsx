@@ -4,7 +4,7 @@ import LocationSection from '../vista-components/LocationSection.jsx';
 import AlertBanner from '../vista-components/AlertBanner.jsx';
 import CurrentWeather from '../vista-components/CurrentWeather.jsx';
 import Forecast from '../vista-components/Forecast.jsx';
-import Advice from '../vista-components/Advice.jsx';
+
 
 const Hero = () => {
   const { detectLocation } = useAppState();
@@ -20,7 +20,6 @@ const Hero = () => {
         <AlertBanner />
         <CurrentWeather />
         <Forecast />
-        <Advice />
       </div>
     </main>
   );
