@@ -73,6 +73,9 @@ const Posts = () => {
   const filteredReports = reports
     .filter((r) => {
       if (!filter) return true;
+      if (filter === "hazard" || filter === "social") {
+        return r.reportType === filter;
+      }
       return r.selectedCategory === filter;
     })
     .sort((a, b) => {

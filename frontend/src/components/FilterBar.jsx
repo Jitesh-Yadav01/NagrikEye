@@ -9,12 +9,18 @@ const FilterBar = ({ setFilter, sort, setSort }) => {
     const mainCategories = [
         "All",
         "Hazard Issue",
-        "Social Issue"
+        "Social Issue",
+        "Electricity Utility",
+        "Gas Distribution",
+        "Municipal Corporation"
     ];
 
     const subCategories = {
-        "Hazard Issue": ["All", "Potholes / Road Damage", "Illegal Construction", "Stray Cattle", "Garbage / Drainage", "Other"],
-        "Social Issue": ["All", "Noise Pollution", "Community Safety", "Public Nuisance", "Neighborhood Dispute", "Other Social Issue"]
+        "Hazard Issue": ["Potholes / Road Damage", "Illegal Construction", "Stray Cattle", "Garbage / Drainage", "Other"],
+        "Social Issue": ["Noise Pollution", "Community Safety", "Public Nuisance", "Neighborhood Dispute", "Other Social Issue"],
+        "Electricity Utility": ["Power Outage", "Street Lighting", "Transformer Issue", "Meter/Billing", "Other Electricity Issue"],
+        "Gas Distribution": ["Gas Leak", "Pipeline Damage", "Cylinder Delivery", "Meter Fault", "Other Gas Issue"],
+        "Municipal Corporation": ["Water Supply Issue", "Sewage Blockage", "Waste Collection Delay", "Public Toilet Issue", "Other Municipal Issue"]
     };
 
     const sortOptions = [
@@ -23,14 +29,21 @@ const FilterBar = ({ setFilter, sort, setSort }) => {
     ];
 
     useEffect(() => {
+        const reportTypeMap = {
+            "Hazard Issue": "hazard",
+            "Social Issue": "social",
+            "Electricity Utility": "electricity",
+            "Gas Distribution": "gas",
+            "Municipal Corporation": "municipal"
+        };
+
         if (mainCategory === "" || mainCategory === "All") {
             setFilter("");
-            // eslint-disable-next-line react-hooks/set-state-in-effect
-            setSubCategory("");
+
         } else if (subCategory && subCategory !== "All") {
             setFilter(subCategory);
         } else {
-            setFilter("");
+            setFilter(reportTypeMap[mainCategory] || "");
         }
     }, [mainCategory, subCategory, setFilter]);
 
@@ -119,8 +132,8 @@ const FilterBar = ({ setFilter, sort, setSort }) => {
                                             setIsSortOpen(false);
                                         }}
                                         className={`w-full text-left px-4 py-2.5 text-sm transition-colors cursor-pointer ${sort === option.value
-                                                ? "bg-[#339966]/10 text-[#339966] font-semibold"
-                                                : "text-stone-600 hover:bg-stone-50"
+                                            ? "bg-[#339966]/10 text-[#339966] font-semibold"
+                                            : "text-stone-600 hover:bg-stone-50"
                                             }`}
                                     >
                                         {option.label}
