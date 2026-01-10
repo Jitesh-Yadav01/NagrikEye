@@ -7,6 +7,34 @@ import Sidebar from '../components/Sidebar';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 
+const REPORT_SUBCATEGORY_OPTIONS = [
+    'Potholes / Road Damage',
+    'Illegal Construction',
+    'Stray Cattle',
+    'Garbage / Drainage',
+    'Other',
+    'Noise Pollution',
+    'Community Safety',
+    'Public Nuisance',
+    'Neighborhood Dispute',
+    'Power Outage',
+    'Street Lighting',
+    'Transformer Issue',
+    'Meter/Billing',
+    'Gas Leak',
+    'Pipeline Damage',
+    'Cylinder Delivery',
+    'Meter Fault',
+    'Water Supply Issue',
+    'Sewage Blockage',
+    'Waste Collection Delay',
+    'Public Toilet Issue',
+    'Other Gas Issue',
+    'Other Social Issue',
+    'Other Electricity Issue',
+    'Other Municipal Issue'
+];
+
 const AdminReports = () => {
     const { user } = useAuth();
     const navigate = useNavigate();
@@ -133,7 +161,8 @@ const AdminReports = () => {
         document.body.removeChild(link);
     };
 
-    const categories = ['All Categories', ...new Set(reports.map(r => r.selectedCategory || 'General'))];
+    const categoryCandidates = [...REPORT_SUBCATEGORY_OPTIONS, ...reports.map(r => r.selectedCategory || 'General')];
+    const categories = ['All Categories', ...new Set(categoryCandidates)];
 
     const filteredReports = reports.filter(r => {
         const matchesStatus = statusFilter === 'all' ||
