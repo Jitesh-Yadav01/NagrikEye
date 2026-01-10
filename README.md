@@ -1,10 +1,11 @@
 
 #### Contents : 
 
- - [Project Idea](#project-idea)
- - [Core Features](#core-features)
- - [Business Model](#business-mode)
- - [Tech Stack](#tech-stack)
+- [Project Idea:](#project-idea)
+- [Core Features](#core-features)
+- [Business Model](#business-model)
+  - [Potential Users / Adopters](#potential-users--adopters)
+  - [Tech Stack:](#tech-stack)
 
 ### Project Idea: 
 In many civic systems, citizen complaints remain unresolved due to lack of transparency, accountability, and fear of retaliation. People hesitate to raise issues because exposing their identity can lead to threats or external pressure. Additionally, citizens are often forced to file RTI applications even for basic public information due to poor accessibility and visibility of government actions. This project aims to reduce such dependency on RTIs by making complaint status and civic data openly available. By ensuring strong user privacy and public transparency, the platform empowers citizens while forcing responsible authorities to take action.
@@ -16,15 +17,16 @@ The platform utilizes datasets such as location, population, and issue categorie
 
 -   **Upvote-Based Verification**  
     An upvote system is used to establish the authenticity and relevance of reported issues, especially since users remain anonymous. Higher community engagement helps surface genuine and high-impact problems.
-    
+    ![Nagrik Eye Preview](./demo/feed.png)
 -   **Metadata Stripping for Privacy**  
     All uploaded images have their metadata (such as device details and location traces) removed to prevent third parties from identifying or tracking the user.
     
 -   **AI-Driven Priority List**  
     The platform generates a priority list of issues for municipal corporations by analyzing factors like severity, location, and public engagement. This helps authorities reduce workload and supports data-driven decision-making.
+    ![Nagrik Eye Preview](./demo/admin.png)
    -   **Full Public Transparency**  
     All reported issues are marked on a public map and categorized by status such as **Pending** and **Resolved**, ensuring complete visibility into civic problems and government action.
-
+    ![Nagrik Eye Preview](./demo/map.png)
 ---
 
 ###  Business Model
@@ -45,6 +47,7 @@ The platform follows a **B2G (Business-to-Government)** model, offering the syst
 -   **State Urban Development Departments**  
     For monitoring inter-city performance, issue resolution timelines, and accountability.
 
+---
 #### Tech Stack:
 
  1. React

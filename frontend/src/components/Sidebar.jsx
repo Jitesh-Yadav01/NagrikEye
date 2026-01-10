@@ -96,7 +96,7 @@ const Sidebar = ({ isCollapsed, toggleSidebar, onLogout, isMobile }) => {
             >
                 <div className="p-6 flex items-center justify-between h-20">
                     <div className={`font-bold text-xl tracking-wider whitespace-nowrap overflow-hidden transition-all duration-300 ${isCollapsed && !isMobile ? 'opacity-0 w-0' : 'opacity-100 w-auto'}`}>
-                        <span className="text-[#8ED462]">Nagrik</span>Eye
+                        <Link to={"/"}><span className="text-[#8ED462]">Nagrik</span>Eye</Link>
                     </div>
                     <button
                         onClick={toggleSidebar}
