@@ -35,6 +35,70 @@ const AdminAI = () => {
     const chatEndRef = useRef(null);
     const API_KEY = import.meta.env.VITE_OPEN_ROUTER_API?.trim();
 
+    const formatReportsForAI = (data) => {
+        return data.slice(0, 50).map(r =>
+            `- [${r.status || 'Pending'}] ${r.selectedCategory}: ${r.description} (${r.location}) - ${r.createdAtDate?.toLocaleDateString()}`
+        ).join('\n');
+    };
+
+    const cleanAIResponse = (text) => {
+        return text.replace(/<s>/g, '')
+            .replace(/<\/s>/g, '')
+            .replace(/\[INST\]/g, '')
+            .replace(/\[\/INST\]/g, '')
+            .replace(/\[OUTST\]/g, '')
+            .replace(/\[\/OUTST\]/g, '')
+            .trim();
+    };
+
+    const generateSummary = async (filteredReports, rangeText) => {
+        if (!API_KEY) {
+            setSummary("API Key required to generate analysis.");
+            return;
+        }
+        setAnalyzing(true);
+        const reportText = formatReportsForAI(filteredReports);
+        const rangeLabel = rangeText === 'daily' ? 'Today' : rangeText === 'monthly' ? 'This Month' : 'Selected Range';
+
+        try {
+            const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+                method: "POST",
+                headers: {
+                    "Authorization": `Bearer ${API_KEY}`,
+                    "Content-Type": "application/json",
+                    "HTTP-Referer": window.location.origin,
+                    "X-Title": "NagrikEye"
+                },
+                body: JSON.stringify({
+                    "model": "mistralai/mistral-7b-instruct:free",
+                    "messages": [
+                        {
+                            "role": "system",
+                            "content": `You are NagrikEye AI. Analyze these city issues for ${rangeLabel}. Identify top critical areas. 
+                            RULES:
+                            1. Use standard Markdown formatting (bold **text**, lists -).
+                            2. Do NOT use XML tags or special tokens.
+                            3. Be concise and professional.`
+                        },
+                        {
+                            "role": "user",
+                            "content": reportText || "No new reports found for this period."
+                        }
+                    ]
+                })
+            });
+            const json = await response.json();
+            if (json.choices && json.choices.length > 0) {
+                const cleanText = cleanAIResponse(json.choices[0].message.content);
+                setSummary(cleanText);
+            }
+        } catch (error) {
+            console.error("Summary error:", error);
+        } finally {
+            setAnalyzing(false);
+        }
+    };
+
     useEffect(() => {
 
         setCurrentSessionId(sessionIdFromUrl);
@@ -106,11 +170,7 @@ const AdminAI = () => {
         }
     };
 
-    const formatReportsForAI = (data) => {
-        return data.slice(0, 50).map(r =>
-            `- [${r.status || 'Pending'}] ${r.selectedCategory}: ${r.description} (${r.location}) - ${r.createdAtDate?.toLocaleDateString()}`
-        ).join('\n');
-    };
+
 
     const filterReportsByRange = (data, range) => {
         const now = new Date();
@@ -146,63 +206,9 @@ const AdminAI = () => {
         }
     };
 
-    const cleanAIResponse = (text) => {
-        return text.replace(/<s>/g, '')
-            .replace(/<\/s>/g, '')
-            .replace(/\[INST\]/g, '')
-            .replace(/\[\/INST\]/g, '')
-            .replace(/\[OUTST\]/g, '')
-            .replace(/\[\/OUTST\]/g, '')
-            .trim();
-    };
 
-    const generateSummary = async (filteredReports, rangeText) => {
-        if (!API_KEY) {
-            setSummary("API Key required to generate analysis.");
-            return;
-        }
-        setAnalyzing(true);
-        const reportText = formatReportsForAI(filteredReports);
-        const rangeLabel = rangeText === 'daily' ? 'Today' : rangeText === 'monthly' ? 'This Month' : 'Selected Range';
 
-        try {
-            const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
-                method: "POST",
-                headers: {
-                    "Authorization": `Bearer ${API_KEY}`,
-                    "Content-Type": "application/json",
-                    "HTTP-Referer": window.location.origin,
-                    "X-Title": "NagrikEye"
-                },
-                body: JSON.stringify({
-                    "model": "mistralai/mistral-7b-instruct:free",
-                    "messages": [
-                        {
-                            "role": "system",
-                            "content": `You are NagrikEye AI. Analyze these city issues for ${rangeLabel}. Identify top critical areas. 
-                            RULES:
-                            1. Use standard Markdown formatting (bold **text**, lists -).
-                            2. Do NOT use XML tags or special tokens.
-                            3. Be concise and professional.`
-                        },
-                        {
-                            "role": "user",
-                            "content": reportText || "No new reports found for this period."
-                        }
-                    ]
-                })
-            });
-            const json = await response.json();
-            if (json.choices && json.choices.length > 0) {
-                const cleanText = cleanAIResponse(json.choices[0].message.content);
-                setSummary(cleanText);
-            }
-        } catch (error) {
-            console.error("Summary error:", error);
-        } finally {
-            setAnalyzing(false);
-        }
-    };
+
 
     const handleSend = async (e) => {
         e.preventDefault();
@@ -319,7 +325,7 @@ const AdminAI = () => {
                                 onClick={() => setDropdownOpen(!dropdownOpen)}
                                 className="bg-white px-4 py-2 rounded-xl border border-stone-200 shadow-sm flex items-center gap-2 text-sm font-medium hover:bg-stone-50 transition-colors"
                             >
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><firstLine x1="16" y1="2" x2="16" y2="6"></firstLine><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
                                 {summaryRange === 'daily' ? 'Today' : summaryRange === 'monthly' ? 'This Month' : 'Custom'}
                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className={`transition-transform ${dropdownOpen ? 'rotate-180' : ''}`}><polyline points="6 9 12 15 18 9"></polyline></svg>
                             </button>
