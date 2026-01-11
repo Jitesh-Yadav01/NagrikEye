@@ -29,7 +29,7 @@ export default function CurrentWeather() {
   const weatherIcon = WeatherUtils.getWeatherIcon(data.weather[0].id)
   
   return (
-    <div ref={ref} className="bg-white rounded-[10px] shadow-sm p-6" style={{ marginLeft: '15px', marginRight: '15px' }}>
+    <div ref={ref} className="bg-white rounded-none md:rounded-[10px] shadow-sm p-4 md:p-6">
       <h2 className="text-2xl font-bold text-[#1a1a1a] mb-4 flex items-center">
         <i className="fas fa-cloud-sun mr-3" style={{ color: '#8ED462' }}></i>
         Current Weather

@@ -3,25 +3,17 @@ import { useNavigate } from 'react-router-dom';
 import vistaLogo from '../assets/vista.png';
 import visLogo from '../assets/vislogo.png';
 
-const Header = () => {
+const Header = ({ isMobile, toggleSidebar }) => {
   const navigate = useNavigate();
-  const [isDesktop, setIsDesktop] = useState(() => (typeof window !== 'undefined' ? window.innerWidth >= 768 : false));
-
-  useEffect(() => {
-    const onResize = () => setIsDesktop(window.innerWidth >= 768);
-    window.addEventListener('resize', onResize);
-    return () => window.removeEventListener('resize', onResize);
-  }, []);
+  const isDesktop = !isMobile;
 
   return (
     <header
       className="relative shadow-sm"
       style={{
         backgroundColor: '#000000',
-        width: '100vw',
+        width: '100%',
         height: '100px',
-        marginLeft: 'calc(-50vw + 50%)',
-        marginRight: 'calc(-50vw + 50%)',
         ...(isDesktop
           ? {
               backgroundImage: `url(${vistaLogo})`,
@@ -46,14 +38,28 @@ const Header = () => {
             <p className="text-sm text-white/90 drop-shadow-md">Smart City Advisory</p>
           </div>
         </div>
-        <button
-          onClick={() => navigate(-1)}
-          className="transition-all duration-200 px-4 py-2 rounded-[8px] hover:shadow-md"
-          style={{ backgroundColor: 'rgba(0, 0, 0, 0.6)', color: 'white', border: '1px solid rgba(255, 255, 255, 0.3)' }}
-        >
-          <i className="fas fa-arrow-left mr-2"></i>
-          <span>Back</span>
-        </button>
+        
+        {isMobile ? (
+           <button
+             onClick={toggleSidebar}
+             className="text-white p-2"
+           >
+             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="3" y1="12" x2="21" y2="12"></line>
+                <line x1="3" y1="6" x2="21" y2="6"></line>
+                <line x1="3" y1="18" x2="21" y2="18"></line>
+             </svg>
+           </button>
+        ) : (
+            <button
+              onClick={() => navigate('/')}
+              className="transition-all duration-200 px-4 py-2 rounded-[8px] hover:shadow-md cursor-pointer"
+              style={{ backgroundColor: 'rgba(0, 0, 0, 0.6)', color: 'white', border: '1px solid rgba(255, 255, 255, 0.3)' }}
+            >
+              <i className="fas fa-arrow-left mr-2"></i>
+              <span>Back</span>
+            </button>
+        )}
       </div>
     </header>
   );

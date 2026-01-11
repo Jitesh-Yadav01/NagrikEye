@@ -23,7 +23,7 @@ export default function Forecast() {
   if (daily.length === 0) return <div className="text-center text-gray-600"><i className="fas fa-spinner fa-spin mr-2"></i>Loading...</div>
   
   return (
-    <div className="bg-white rounded-[10px] shadow-sm p-6 mb-12" style={{ marginLeft: '15px', marginRight: '15px' }}>
+    <div className="bg-white rounded-none md:rounded-[10px] shadow-sm p-4 md:p-6 mb-12">
       <h2 className="text-2xl font-bold text-[#1a1a1a] mb-4 flex items-center">
         <i className="fas fa-calendar-week mr-3" style={{ color: '#8ED462' }}></i>
         7-Day Forecast
