@@ -23,6 +23,7 @@ The platform utilizes datasets such as location, population, and issue categorie
     
 -   **AI-Driven Priority List**  
     The platform generates a priority list of issues for municipal corporations by analyzing factors like severity, location, and public engagement. This helps authorities reduce workload and supports data-driven decision-making.
+    ![Nagrik Eye Preview](./demo/aiAssistant.jpg)
     ![Nagrik Eye Preview](./demo/admin.png)
    -   **Full Public Transparency**  
     All reported issues are marked on a public map and categorized by status such as **Pending** and **Resolved**, ensuring complete visibility into civic problems and government action.
