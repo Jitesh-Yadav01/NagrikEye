@@ -11,6 +11,11 @@ import AdminAnalytics from "./pages/AdminAnalytics";
 import AdminAI from "./pages/AdminAI";
 import AdminAIHistory from "./pages/AdminAIHistory";
 import VistaApp from "./pages/VistaApp";
+import CurrentWeather from "./vista-components/CurrentWeather";
+import Forecast from "./vista-components/Forecast";
+import VistaAIAssistant from "./vista-components/VistaAIAssistant";
+import Hero from "./vista-pages/Hero";
+import VistaAIHistory from "./vista-pages/VistaAIHistory";
 
 function App() {
   useAuth();
@@ -26,7 +31,13 @@ function App() {
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<Auth />} />
-        <Route path="/vista" element={<VistaApp />} />
+        <Route path="/vista" element={<VistaApp />}>
+          <Route index element={<Hero />} />
+          <Route path="weather" element={<div className="w-full p-0 md:p-6"><CurrentWeather /></div>} />
+          <Route path="forecast" element={<div className="w-full p-0 md:p-6"><Forecast /></div>} />
+          <Route path="ai" element={<div className="h-[calc(100vh-100px)] w-full mb-8"><VistaAIAssistant /></div>} />
+          <Route path="ai-history" element={<VistaAIHistory />} />
+        </Route>
 
         <Route path="/dashboard" element={<AdminDashboard />} />
         <Route path="/admin-dashboard" element={<AdminDashboard />} />

@@ -22,7 +22,6 @@ export default function MapView() {
           const locationName = data.address?.city || data.address?.town || data.address?.country || `${lat.toFixed(4)}, ${lng.toFixed(4)}`
           await searchLocation(locationName)
         } catch {
-          // Handle error silently
         }
       })
       

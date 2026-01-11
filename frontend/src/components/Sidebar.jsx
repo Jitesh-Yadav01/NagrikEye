@@ -3,7 +3,7 @@ import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { Link, useLocation } from 'react-router-dom';
 
-const Sidebar = ({ isCollapsed, toggleSidebar, onLogout, isMobile }) => {
+const Sidebar = ({ isCollapsed, toggleSidebar, onLogout, isMobile, menuItems: propMenuItems, logoContent, backgroundColor }) => {
     const sidebarRef = useRef(null);
     const location = useLocation();
 
@@ -31,7 +31,7 @@ const Sidebar = ({ isCollapsed, toggleSidebar, onLogout, isMobile }) => {
         }
     };
 
-    const menuItems = [
+    const defaultMenuItems = [
         {
             name: 'Dashboard', path: '/admin-dashboard', icon: (
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -81,6 +81,8 @@ const Sidebar = ({ isCollapsed, toggleSidebar, onLogout, isMobile }) => {
         }
     ];
 
+    const menuItems = propMenuItems || defaultMenuItems;
+
     return (
         <>
             {isMobile && !isCollapsed && (
@@ -92,11 +94,11 @@ const Sidebar = ({ isCollapsed, toggleSidebar, onLogout, isMobile }) => {
             <div
                 ref={sidebarRef}
                 className="h-screen bg-[#1a1a1a] text-white fixed left-0 top-0 z-999 overflow-hidden flex flex-col shadow-2xl border-r border-stone-800"
-                style={{ width: '280px' }}
+                style={{ width: '280px', backgroundColor: backgroundColor }}
             >
                 <div className="p-6 flex items-center justify-between h-20">
                     <div className={`font-bold text-xl tracking-wider whitespace-nowrap overflow-hidden transition-all duration-300 ${isCollapsed && !isMobile ? 'opacity-0 w-0' : 'opacity-100 w-auto'}`}>
-                        <Link to={"/"}><span className="text-[#8ED462]">Nagrik</span>Eye</Link>
+                        {logoContent || <Link to={"/"}><span className="text-[#8ED462]">Nagrik</span>Eye</Link>}
                     </div>
                     <button
                         onClick={toggleSidebar}

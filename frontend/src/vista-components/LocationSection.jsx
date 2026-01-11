@@ -6,11 +6,10 @@ import MapView from './MapView.jsx'
 export default function LocationSection() {
   const { locationName } = useAppState()
   return (
-    <section className="bg-white rounded-[10px] shadow-sm p-6" style={{ marginLeft: '15px', marginRight: '15px' }}>
+    <section className="w-full">
       <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-6 gap-4">
         <h2 className="text-2xl font-bold text-[#1a1a1a] flex items-center">
           <i className="fas fa-map-marker-alt mr-3" style={{ color: '#8ED462' }}></i>
-          Location
         </h2>
         <div className="w-full lg:w-auto">
           <LocationControls />
